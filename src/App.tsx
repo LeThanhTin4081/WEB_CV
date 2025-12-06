@@ -11,13 +11,13 @@ function App() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900 font-sans">
       
-      {/* NAVBAR (Sắp xếp theo đúng ảnh bạn gửi) */}
+      {/* NAVBAR */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg shadow-sm border-b border-slate-100 transition-all">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           
-          {/* Logo */}
+          {/* Logo Tên Mới */}
           <span className="text-2xl font-extrabold bg-gradient-to-r from-blue-700 to-cyan-500 bg-clip-text text-transparent cursor-pointer">
-            Pham Thao My
+            Lê Thành Tin
           </span>
 
           {/* Menu Desktop */}
@@ -44,29 +44,15 @@ function App() {
         </div>
       </nav>
 
-      {/* NỘI DUNG CHÍNH (Cũng sắp xếp lại thứ tự các khối cho khớp với menu) */}
-      
-      {/* 1. Trang chủ */}
+      {/* Nội dung chính */}
       <div id="hero"><Hero /></div>
       
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-12">
-        
-        {/* 2. Giới thiệu */}
         <div id="about"><About /></div>
-
-        {/* 3. Kinh nghiệm (Đưa lên trên) */}
         <div id="experience"><Experience /></div>
-
-        {/* 4. Dự án (Đưa lên giữa) */}
         <div id="projects"><Projects /></div>
-
-        {/* 5. Kỹ năng (Đưa xuống dưới) */}
         <div id="skills"><Skills /></div>
-        
-        {/* Phần học vấn (Mình để kèm sau Kỹ năng cho hợp lý) */}
         <div id="education"><Education /></div>
-
-        {/* 6. Liên hệ */}
         <div id="contact"><Contact /></div>
       </div>
 

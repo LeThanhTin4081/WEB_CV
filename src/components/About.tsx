@@ -5,10 +5,10 @@ const About = () => {
         {/* Cột Ảnh */}
         <div className="md:col-span-1">
           <div className="relative">
-             {/* BẠN NHỚ CHÉP ẢNH avatar.jpg VÀO THƯ MỤC PUBLIC NHÉ */}
+             {/* Nhớ chép ảnh thẻ của Tin vào public/avatar.jpg nhé */}
             <img 
               src="/avatar.jpg" 
-              alt="Pham Thao My" 
+              alt="Lê Thành Tin" 
               className="rounded-2xl shadow-2xl w-full object-cover aspect-[3/4] border-4 border-white"
             />
             <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-blue-100 rounded-full -z-10"></div>
@@ -25,20 +25,29 @@ const About = () => {
           
           <h3 className="text-xl font-bold text-slate-700">Tóm Tắt Chuyên Môn</h3>
           <p className="text-slate-600 leading-relaxed text-justify">
-            Cử nhân Quản trị Kinh doanh với 5 năm kinh nghiệm học tập và giảng dạy thống kê. 
-            Có nền tảng vững chắc về kinh tế học và phân tích dữ liệu kinh doanh. 
-            Thành thạo các kỹ năng EDA, làm sạch dữ liệu, trực quan hóa và xây dựng KPI để hỗ trợ ra quyết định. 
-            Tôi hào hứng tham gia vào doanh nghiệp để đóng góp những insights giá trị từ dữ liệu.
+            Xin chào, tôi là <strong>Lê Thành Tin</strong>, hiện là sinh viên năm 3 chuyên ngành Khoa học Dữ liệu. 
+            Với niềm đam mê khám phá insights từ các con số, tôi đã trang bị nền tảng vững chắc về Công nghệ thông tin và các công cụ phân tích dữ liệu.
+            <br/><br/>
+            Dù đang ngồi trên ghế nhà trường, tôi luôn chủ động trau dồi kỹ năng thực tế qua các dự án cá nhân về Excel, SQL, Python và Power BI. 
+            Tôi đang tìm kiếm cơ hội thực tập để áp dụng kiến thức học thuật vào môi trường doanh nghiệp thực tế.
           </p>
 
-          {/* Box Đại học (Giống ảnh mẫu) */}
+          {/* Box Học vấn */}
           <div className="bg-white p-5 border-l-4 border-blue-600 shadow-md rounded-r-lg mt-6">
-            <h4 className="font-bold text-lg text-slate-900">Đại Học Sài Gòn (SGU)</h4>
-            <p className="text-sm text-slate-500 mb-2">2020 - 09/2024</p>
-            <p className="text-blue-700 font-medium">Cử nhân Quản trị Kinh doanh</p>
-            <p className="text-sm text-slate-600 mt-2">
-              <strong>GPA các môn chuyên ngành:</strong> 4.0/4.0 (Tập trung vào Phân tích dữ liệu & Business Intelligence)
-            </p>
+            <h4 className="font-bold text-lg text-slate-900">Trường Đại học Giao thông Vận tải TP.HCM (UTH)</h4>
+            <p className="text-sm text-slate-500 mb-2">09/2023 - Hiện tại (Đang học)</p>
+            
+            <div className="space-y-1">
+              <p className="text-blue-700 font-medium">
+                Chuyên ngành: Khoa học dữ liệu
+              </p>
+            </div>
+
+            <div className="mt-3 pt-3 border-t border-slate-100">
+              <p className="text-sm text-slate-700">
+                <strong>GPA tích lũy:</strong> <span className="font-bold text-blue-600">3.2/4.0</span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
