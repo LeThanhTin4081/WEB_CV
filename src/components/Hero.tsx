@@ -32,8 +32,8 @@ const Hero = () => {
           </a>
         </div>
 
-        {/* Nút Gradient (giống nút Subscribe ảnh 2) */}
-        <a href="#projects" className="inline-block bg-gradient-to-r from-blue-600 to-cyan-400 text-white font-bold px-10 py-3.5 rounded-full shadow-lg shadow-blue-500/30 hover:shadow-cyan-500/50 transition-all transform hover:-translate-y-1">
+        {/* Nút Gradient (giống nút Subscribe ảnh 2) + Hiệu ứng Shimmer */}
+        <a href="#projects" className="btn-shimmer inline-block bg-gradient-to-r from-blue-600 to-cyan-400 text-white font-bold px-10 py-3.5 rounded-full shadow-lg shadow-blue-500/30 hover:shadow-cyan-500/50 transition-all transform hover:-translate-y-1">
           Xem Dự Án Của Tôi
         </a>
       </div>

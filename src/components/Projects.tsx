@@ -4,7 +4,8 @@ const Projects = () => {
   return (
     <section className="scroll-mt-24">
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold text-slate-800">Dự Án Nổi Bật</h2>
+        <h2 className="text-3xl font-bold text-slate-800 uppercase tracking-wide">Dự Án Nổi Bật</h2>
+        <div className="w-20 h-1.5 bg-blue-600 rounded-full mx-auto mt-4"></div>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-8">

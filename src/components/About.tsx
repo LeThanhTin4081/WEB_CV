@@ -21,7 +21,7 @@ const About = () => {
         {/* Cột Nội dung */}
         <div className="md:col-span-2 space-y-6">
           <div>
-            <h2 className="text-3xl font-bold text-slate-800 mb-2">Giới Thiệu</h2>
+            <h2 className="text-3xl font-bold text-slate-800 uppercase tracking-wide mb-2">Giới Thiệu</h2>
             <div className="w-20 h-1.5 bg-blue-600 rounded-full"></div>
           </div>
           
