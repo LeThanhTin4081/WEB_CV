@@ -27,10 +27,10 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-bold text-white mb-4">Kết Nối</h3>
           <div className="flex gap-3">
-            <a href="mailto:thanhtin.student@gmail.com" className="bg-slate-800 p-2.5 rounded-lg hover:bg-blue-600 hover:text-white transition">
+            <a href="mailto:lethanhtin.cv@gmail.com" className="bg-slate-800 p-2.5 rounded-lg hover:bg-blue-600 hover:text-white transition">
               <Mail size={20} />
             </a>
-            <a href="https://www.linkedin.com/in/lethanhtin41" target="_blank" rel="noreferrer" className="bg-slate-800 p-2.5 rounded-lg hover:bg-blue-700 hover:text-white transition">
+            <a href="https://www.linkedin.com/in/lethanhtin4081" target="_blank" rel="noreferrer" className="bg-slate-800 p-2.5 rounded-lg hover:bg-blue-700 hover:text-white transition">
               <Linkedin size={20} />
             </a>
             <a href="https://github.com/LeThanhTin4081" target="_blank" rel="noreferrer" className="bg-slate-800 p-2.5 rounded-lg hover:bg-gray-600 hover:text-white transition">

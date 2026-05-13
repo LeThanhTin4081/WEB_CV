@@ -7,23 +7,28 @@ const Hero = () => {
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl mb-4 drop-shadow-lg uppercase">
           LÊ THÀNH TIN
         </h1>
-        <p className="text-xl sm:text-2xl text-blue-100 font-light mb-8">
-          Thực Tập Sinh Phân Tích Dữ Liệu (Data Analyst Intern)
+        <p className="text-lg sm:text-xl text-blue-200 font-semibold tracking-widest uppercase mb-3">
+          Data Analyst · Data Science Student
         </p>
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <span className="h-px w-16 bg-gradient-to-r from-transparent to-blue-300/60"></span>
+          <span className="text-base text-white/90 font-medium tracking-wider drop-shadow-md">Get to know me!</span>
+          <span className="h-px w-16 bg-gradient-to-l from-transparent to-blue-300/60"></span>
+        </div>
         
         {/* Thông tin liên hệ nhanh */}
         <div className="flex flex-wrap justify-center gap-4 mb-10 text-sm font-medium text-blue-100">
           
           {/* Sửa: Hiện thẳng email ra cho dễ copy */}
-          <a href="mailto:thanhtin.student@gmail.com" className="flex items-center gap-2 px-3 py-2 bg-white/10 rounded-full hover:bg-white/20 transition backdrop-blur-sm">
-            <Mail size={18} /> thanhtin.student@gmail.com
+          <a href="mailto:lethanhtin.cv@gmail.com" className="flex items-center gap-2 px-3 py-2 bg-white/10 rounded-full hover:bg-white/20 transition backdrop-blur-sm">
+            <Mail size={18} /> lethanhtin.cv@gmail.com
           </a>
 
           <a href="tel:+84349249103" className="flex items-center gap-2 px-3 py-2 bg-white/10 rounded-full hover:bg-white/20 transition backdrop-blur-sm">
             <Phone size={18} /> (+84) 349 249 103
           </a>
 
-          <a href="https://www.linkedin.com/in/lethanhtin41" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-3 py-2 bg-white/10 rounded-full hover:bg-white/20 transition backdrop-blur-sm">
+          <a href="https://www.linkedin.com/in/lethanhtin4081" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-3 py-2 bg-white/10 rounded-full hover:bg-white/20 transition backdrop-blur-sm">
             <Linkedin size={18} /> LinkedIn
           </a>
           
