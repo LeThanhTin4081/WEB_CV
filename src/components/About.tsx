@@ -1,7 +1,9 @@
+import { Download } from 'lucide-react';
+
 const About = () => {
   return (
     <section className="scroll-mt-24">
-      <div className="grid md:grid-cols-3 gap-12 items-center">
+      <div className="grid md:grid-cols-3 gap-12 items-end">
         {/* Cột Ảnh */}
         <div className="md:col-span-1">
           <div className="relative">
@@ -48,6 +50,62 @@ const About = () => {
                 <strong>GPA tích lũy:</strong> <span className="font-bold text-blue-600">3.2/4.0</span>
               </p>
             </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Download Resume */}
+      <div className="mt-24 max-w-3xl mx-auto">
+        <h2 className="text-3xl font-bold text-slate-800 text-center mb-8">Resume</h2>
+        <div className="bg-slate-100 px-6 py-4 flex items-center justify-between hover:bg-slate-200 transition-colors">
+          <span className="text-slate-700 text-sm font-medium">TinLeThanh_CV (pdf)</span>
+          <a 
+            href="/TinLeThanh_CV.pdf" 
+            download="TinLeThanh_CV.pdf"
+            className="flex items-center gap-2 text-slate-500 hover:text-slate-800 text-sm transition-colors"
+          >
+            <Download size={16} /> Download
+          </a>
+        </div>
+      </div>
+
+      {/* Phần About Me - 3 Cột (Experience, Skillset, Goals) */}
+      <div className="mt-24">
+        <h2 className="text-3xl font-bold text-slate-800 text-center mb-12">About Me</h2>
+        
+        <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
+          {/* Cột 1: My Experience */}
+          <div className="flex flex-col items-center">
+            <div className="aspect-square w-full bg-slate-100 rounded-lg mb-6 shadow-sm overflow-hidden border border-slate-200">
+              <img src="/My_Experience.jpg" alt="My Experience" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            <h3 className="text-xl font-bold text-slate-500 mb-4">My Experience</h3>
+            <p className="text-slate-600 leading-relaxed text-justify">
+              Là sinh viên Khoa học Dữ liệu với nền tảng kỹ thuật vững chắc về SQL, Python và Power BI. Tôi có kinh nghiệm xây dựng các luồng dữ liệu tự động (automated data pipelines) và dashboard tương tác để thúc đẩy quyết định dựa trên dữ liệu. Tập trung vào việc tạo ra giá trị thực tế cho doanh nghiệp thông qua làm sạch dữ liệu, phân tích khám phá (EDA) và trực quan hóa.
+            </p>
+          </div>
+
+          {/* Cột 2: My Skillset */}
+          <div className="flex flex-col items-center">
+            <div className="aspect-square w-full bg-slate-100 rounded-lg mb-6 shadow-sm overflow-hidden border border-slate-200">
+              <img src="/My_Skillset.jpg" alt="My Skillset" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            <h3 className="text-xl font-bold text-slate-500 mb-4">My Skillset</h3>
+            <p className="text-slate-600 leading-relaxed text-justify">
+              Tôi chú trọng vào độ chính xác và tối ưu hóa dữ liệu. Kỹ năng chuyên môn bao gồm Python (Pandas/NumPy, thu thập dữ liệu tự động), SQL (truy vấn phức tạp, CTE, Window Functions cho dữ liệu lớn), và Power BI (DAX, Data Modeling, thiết kế dashboard). Ngoài ra, tôi còn ứng dụng Prompt Engineering, Git/GitHub và các công cụ Web (Node.js) để hỗ trợ công việc.
+            </p>
+          </div>
+
+          {/* Cột 3: My Goals */}
+          <div className="flex flex-col items-center">
+            <div className="aspect-square w-full bg-slate-100 rounded-lg mb-6 shadow-sm overflow-hidden border border-slate-200">
+              <img src="/My_Goals.jpg" alt="My Goals" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            <h3 className="text-xl font-bold text-slate-500 mb-4">My Goals</h3>
+            <p className="text-slate-600 leading-relaxed text-justify">
+              Tôi đang tìm kiếm cơ hội làm việc trong môi trường thực tế để áp dụng chuyên môn vào dự án thực tiễn. Tôi mong muốn đồng hành cùng doanh nghiệp để tạo ra những thay đổi tích cực từ dữ liệu. Đồng thời, tôi luôn chủ động học hỏi những tiến bộ mới nhất trong lĩnh vực AI và Dữ liệu để sẵn sàng chinh phục các thử thách khó khăn.
+            </p>
           </div>
         </div>
       </div>
