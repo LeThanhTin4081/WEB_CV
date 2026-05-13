@@ -1,59 +1,71 @@
+import { Database, Bot, Globe } from 'lucide-react';
+
 const Skills = () => {
   return (
     <section className="scroll-mt-24">
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold text-slate-800">Kỹ Năng & Năng Lực</h2>
-        <p className="text-slate-500 mt-2">Công cụ và ngôn ngữ tôi sử dụng hàng ngày</p>
+        <h2 className="text-3xl font-bold text-slate-800 uppercase tracking-wide">Technical Skills</h2>
+        <div className="w-20 h-1.5 bg-blue-600 rounded-full mx-auto mt-4"></div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        {/* Kỹ năng kỹ thuật */}
-        <div className="bg-white p-6 rounded-xl shadow-md border border-slate-100 hover:border-blue-300 transition">
-          <h3 className="text-blue-700 font-bold text-lg mb-4 flex items-center gap-2">
-             🛠 Kỹ Năng Kỹ Thuật
+        {/* Python */}
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
+          <h3 className="text-slate-800 font-bold text-lg mb-3 flex items-center gap-3">
+             <img src="https://cdn.simpleicons.org/python/3776AB" alt="Python" className="w-6 h-6" />
+             Python <span className="text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1 rounded-full ml-auto">Advanced</span>
           </h3>
-          <div className="flex flex-wrap gap-2">
-            {["SQL (BigQuery, PostgreSQL)", "Python (Pandas, Numpy)", "Tableau", "Machine Learning"].map(skill => (
-              <span key={skill} className="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm font-medium">{skill}</span>
-            ))}
-          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Chuyên sâu về phân tích dữ liệu (Pandas/NumPy), nắm vững nền tảng cơ bản về ML pipelines và có kinh nghiệm xây dựng automated data collection.
+          </p>
         </div>
 
-        {/* Kỹ năng phân tích */}
-        <div className="bg-white p-6 rounded-xl shadow-md border border-slate-100 hover:border-green-300 transition">
-          <h3 className="text-green-700 font-bold text-lg mb-4 flex items-center gap-2">
-             📈 Kỹ Năng Phân Tích
+        {/* SQL */}
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
+          <h3 className="text-slate-800 font-bold text-lg mb-3 flex items-center gap-3">
+             <Database className="w-6 h-6 text-blue-600" />
+             SQL <span className="text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1 rounded-full ml-auto">Proficient</span>
           </h3>
-          <div className="flex flex-wrap gap-2">
-            {["Data Cleaning", "ETL Processes", "Kiểm định thống kê", "Phân tích tương quan", "ANOVA"].map(skill => (
-              <span key={skill} className="px-3 py-1 bg-green-50 text-green-800 rounded-md text-sm font-medium">{skill}</span>
-            ))}
-          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Thành thạo complex queries, sử dụng CTEs và Window Functions để trích xuất dữ liệu quy mô lớn (large-scale extraction).
+          </p>
         </div>
 
-        {/* Kỹ năng mềm */}
-        <div className="bg-white p-6 rounded-xl shadow-md border border-slate-100 hover:border-purple-300 transition">
-          <h3 className="text-purple-700 font-bold text-lg mb-4 flex items-center gap-2">
-             🤝 Kỹ Năng Mềm
+        {/* Power BI */}
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
+          <h3 className="text-slate-800 font-bold text-lg mb-3 flex items-center gap-3">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-6 h-6">
+               <path d="M3 13.5h5v7.5H3v-7.5z" fill="#e6ad10"/>
+               <path d="M9.5 8.5h5v12.5h-5V8.5z" fill="#f2c811"/>
+               <path d="M16 3.5h5v17.5h-5V3.5z" fill="#f9e01e"/>
+             </svg>
+             Power BI <span className="text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1 rounded-full ml-auto">Advanced</span>
           </h3>
-          <div className="flex flex-wrap gap-2">
-            {["Giao tiếp", "Giải quyết vấn đề", "Làm việc nhóm", "Thuyết trình", "Tự học"].map(skill => (
-              <span key={skill} className="px-3 py-1 bg-purple-50 text-purple-800 rounded-md text-sm font-medium">{skill}</span>
-            ))}
-          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Kỹ năng DAX nâng cao, thiết kế Data Modeling (Star Schema) và xây dựng interactive dashboard.
+          </p>
         </div>
 
-        {/* Công cụ & Ngôn ngữ */}
-        <div className="bg-white p-6 rounded-xl shadow-md border border-slate-100 hover:border-orange-300 transition">
-          <h3 className="text-orange-700 font-bold text-lg mb-4 flex items-center gap-2">
-             🌍 Ngôn Ngữ & Office
+        {/* AI & Tools */}
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
+          <h3 className="text-slate-800 font-bold text-lg mb-3 flex items-center gap-3">
+             <Bot className="w-6 h-6 text-purple-600" />
+             AI & Tools
           </h3>
-          <div className="space-y-2 text-sm text-slate-700">
-             <p><strong>Tiếng Anh:</strong> Thành thạo</p>
-             <p><strong>Tiếng Việt:</strong> Bản ngữ</p>
-             <div className="h-px bg-slate-100 my-2"></div>
-             <p><strong>Office:</strong> Word, Excel, Canva</p>
-          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Ứng dụng Prompt Engineering, phát triển Agents Dev, quản lý mã nguồn với Git/GitHub và sử dụng Docker (Basic).
+          </p>
+        </div>
+
+        {/* Web & Data */}
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition md:col-span-2 max-w-2xl mx-auto w-full">
+          <h3 className="text-slate-800 font-bold text-lg mb-3 flex items-center gap-3">
+             <Globe className="w-6 h-6 text-teal-600" />
+             Web & Data
+          </h3>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Hỗ trợ hiển thị và xử lý dữ liệu với Node.js, D3.js (Custom Visualization), và Excel (VBA/Pivot).
+          </p>
         </div>
       </div>
     </section>
