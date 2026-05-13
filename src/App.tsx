@@ -1,9 +1,7 @@
 import Hero from './components/Hero';
 import About from './components/About';
-import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
-import Education from './components/Education';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -28,9 +26,7 @@ function App() {
             <a href="#about" className="px-4 py-2 rounded-full text-slate-600 font-medium hover:bg-blue-50 hover:text-blue-700 transition-all">
               Giới thiệu
             </a>
-            <a href="#experience" className="px-4 py-2 rounded-full text-slate-600 font-medium hover:bg-blue-50 hover:text-blue-700 transition-all">
-              Kinh nghiệm
-            </a>
+
             <a href="#projects" className="px-4 py-2 rounded-full text-slate-600 font-medium hover:bg-blue-50 hover:text-blue-700 transition-all">
               Dự án
             </a>
@@ -49,10 +45,8 @@ function App() {
       
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-12">
         <div id="about"><About /></div>
-        <div id="experience"><Experience /></div>
         <div id="projects"><Projects /></div>
         <div id="skills"><Skills /></div>
-        <div id="education"><Education /></div>
         <div id="contact"><Contact /></div>
       </div>
 
