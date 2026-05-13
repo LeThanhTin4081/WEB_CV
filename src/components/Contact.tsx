@@ -99,7 +99,7 @@ const Contact = () => {
 
         {/* CỘT TRÁI: Đã chỉnh màu sáng hơn & Giảm padding */}
         <div className="p-8 bg-gradient-to-br from-blue-700 to-blue-600 text-white flex flex-col justify-center">
-          <h2 className="text-2xl font-bold mb-3 flex items-center gap-2">
+          <h2 className="text-2xl font-bold mb-3 flex items-center justify-center gap-2 text-center">
             Liên Hệ <span className="animate-pulse">👋</span>
           </h2>
 

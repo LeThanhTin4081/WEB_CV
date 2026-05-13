@@ -41,13 +41,13 @@ function App() {
       </nav>
 
       {/* Nội dung chính */}
-      <div id="hero"><Hero /></div>
+      <div id="hero" className="scroll-mt-24"><Hero /></div>
       
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-12">
-        <div id="about"><About /></div>
-        <div id="projects"><Projects /></div>
-        <div id="skills"><Skills /></div>
-        <div id="contact"><Contact /></div>
+        <div id="about" className="scroll-mt-24"><About /></div>
+        <div id="projects" className="scroll-mt-24"><Projects /></div>
+        <div id="skills" className="scroll-mt-24"><Skills /></div>
+        <div id="contact" className="scroll-mt-24"><Contact /></div>
       </div>
 
       <Footer />

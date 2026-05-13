@@ -5,3 +5,18 @@
 body {
   background-color: #f8fafc; /* Màu nền xám nhẹ dễ chịu */
 }
+
+@layer utilities {
+  .bg-animated-gradient {
+    /* Màu xanh dương tươi sáng, sinh động hơn */
+    background: linear-gradient(-45deg, #1e3a8a, #2563eb, #0f4a8a, #3b82f6);
+    background-size: 400% 400%;
+    animation: gradient-shift 10s ease infinite;
+  }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
