@@ -7,13 +7,12 @@ const Hero = () => {
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl mb-4 drop-shadow-lg uppercase">
           LÊ THÀNH TIN
         </h1>
-        <p className="text-lg sm:text-xl text-blue-200 font-semibold tracking-widest uppercase mb-3">
-          Data Analyst · Data Science Student
-        </p>
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <span className="h-px w-16 bg-gradient-to-r from-transparent to-blue-300/60"></span>
-          <span className="text-base text-white/90 font-medium tracking-wider drop-shadow-md">Get to know me!</span>
-          <span className="h-px w-16 bg-gradient-to-l from-transparent to-blue-300/60"></span>
+        <div className="flex items-center justify-center gap-3 mb-10">
+          <span className="h-px w-16 sm:w-24 bg-gradient-to-r from-transparent to-blue-300/60"></span>
+          <p className="text-sm sm:text-base text-blue-100 font-medium tracking-widest uppercase drop-shadow-md text-center">
+            Data Science Student <span className="mx-2 text-blue-300/50">|</span> Get to know me!
+          </p>
+          <span className="h-px w-16 sm:w-24 bg-gradient-to-l from-transparent to-blue-300/60"></span>
         </div>
         
         {/* Thông tin liên hệ nhanh */}

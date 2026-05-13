@@ -7,8 +7,8 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-bold text-white mb-4">Lê Thành Tin</h3>
           <p className="text-sm leading-relaxed text-slate-400">
-            Data Analyst Intern với đam mê phân tích dữ liệu, visualization và machine learning. 
-            Luôn tìm kiếm cơ hội để học hỏi và phát triển trong lĩnh vực data science.
+            Data Science student với đam mê ứng dụng những tiến bộ mới nhất trong nghiên cứu trí tuệ nhân tạo và dữ liệu để giải quyết các vấn đề thực tế. 
+            Luôn tìm kiếm cơ hội để học hỏi và phát triển trong lĩnh vực Data Science.
           </p>
         </div>
 
@@ -17,7 +17,7 @@ const Footer = () => {
           <ul className="space-y-2 text-sm">
             <li><a href="#hero" className="hover:text-blue-400 transition">Trang chủ</a></li>
             <li><a href="#about" className="hover:text-blue-400 transition">Giới thiệu</a></li>
-            <li><a href="#experience" className="hover:text-blue-400 transition">Kinh nghiệm</a></li>
+
             <li><a href="#projects" className="hover:text-blue-400 transition">Dự án</a></li>
             <li><a href="#skills" className="hover:text-blue-400 transition">Kỹ năng</a></li>
             <li><a href="#contact" className="hover:text-blue-400 transition">Liên hệ</a></li>

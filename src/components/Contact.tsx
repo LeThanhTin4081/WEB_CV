@@ -104,7 +104,7 @@ const Contact = () => {
           </h2>
 
           <p className="text-blue-50 mb-8 text-sm leading-relaxed text-justify opacity-95">
-            Nếu bạn quan tâm đến cơ hội hợp tác, dự án phân tích dữ liệu hoặc đang tìm một ứng viên phù hợp, 
+            Nếu bạn quan tâm đến cơ hội hợp tác, dự án khoa học dữ liệu hoặc đang tìm một ứng viên phù hợp, 
             tôi luôn sẵn sàng trao đổi. 
             Mọi thông tin sẽ được chuyển trực tiếp đến email cá nhân của tôi để phản hồi sớm nhất.
           </p>

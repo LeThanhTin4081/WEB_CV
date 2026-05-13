@@ -25,7 +25,7 @@ const About = () => {
           
           <h3 className="text-xl font-bold text-slate-700">Tóm Tắt Chuyên Môn</h3>
           <p className="text-slate-600 leading-relaxed text-justify">
-            Xin chào, tôi là <strong>Lê Thành Tin</strong>, hiện là sinh viên năm 3 chuyên ngành Khoa học Dữ liệu. 
+            Xin chào, tôi là <strong>Lê Thành Tin</strong>, hiện là sinh viên chuyên ngành <strong>Khoa học Dữ liệu</strong>. 
             Với niềm đam mê khám phá insights từ các con số, tôi đã trang bị nền tảng vững chắc về Công nghệ thông tin và các công cụ phân tích dữ liệu.
             <br/><br/>
             Dù đang ngồi trên ghế nhà trường, tôi luôn chủ động trau dồi kỹ năng thực tế qua các dự án cá nhân về Excel, SQL, Python và Power BI. 
