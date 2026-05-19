@@ -18,6 +18,27 @@ Built with cutting-edge web technologies, this project serves as an interactive 
 
 ---
 
+## 📊 Showcased Projects
+
+Here are the key projects featured in this portfolio:
+
+1. **End-to-End E-Commerce Customer & Sales Analytics** 🛒
+   - **Tech Stack:** SQL Server (T-SQL), Python, Streamlit, Plotly
+   - **Highlights:** Designed an ELT pipeline to process 51k+ records; trained a K-Means model to segment 39k customers (RFM); built an interactive Streamlit dashboard for real-time sales and margin insights.
+   - [GitHub Repo](https://github.com/LeThanhTin4081/SQL-ECommerce-Analytics-With-Machine-Learning) | [Live Dashboard](https://ecommerce-annual-report-2018.streamlit.app/)
+
+2. **Ho Chi Minh City Housing Market Analysis 2021 – 2025** 🏠
+   - **Tech Stack:** Python (Selenium, BeautifulSoup), Power BI, EDA
+   - **Highlights:** Built an automated web crawler to gather 163k+ real estate listings; cleaned and analyzed market distribution; built an interactive Power BI dashboard with DAX for regional price trends.
+   - [GitHub Repo](https://github.com/LeThanhTin4081/hochiminh-city-house-price-analysis)
+
+3. **Essential Commodity Price Analysis in Vietnam 2005 - 2025** 📈
+   - **Tech Stack:** Excel (Power Query), Python, Power BI
+   - **Highlights:** Consolidated 20 years of historical price data; linked commodity trends to economic events (COVID-19, 2008 Financial Crisis) using DAX models; provided actionable market volatility insights.
+   - [GitHub Repo](https://github.com/LeThanhTin4081/phan-tich-bien-dong-gia-ca-vietnam-2005-2025)
+
+---
+
 ## 💻 Tech Stack
 
 - **Framework:** React 18 ⚛️
@@ -56,7 +77,7 @@ WEB_CV/
 
 1. **Clone the repository** 📥
    ```bash
-   git clone https://github.com/your-username/your-repo.git
+   git clone https://github.com/LeThanhTin4081/WEB_CV.git
    cd WEB_CV
    ```
 
