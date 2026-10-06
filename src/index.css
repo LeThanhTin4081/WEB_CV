@@ -60,14 +60,15 @@ body,
     background: linear-gradient(135deg, #0a1628, #0f172a, #020617);
   }
 
-  /* Soft ambient glow — chỉ opacity/transform (tránh filter hue-rotate: rất nặng GPU) */
+  /* Soft ambient glow — hue nhẹ như Terran (đổi màu rõ nhưng không nặng như bản cũ) */
   .water-glow {
     position: fixed;
     inset: 0;
     z-index: 1;
     pointer-events: none;
+    transform-origin: center center;
     transform: translateZ(0);
-    will-change: opacity, transform;
+    will-change: opacity, transform, filter;
     background:
       radial-gradient(circle at 25% 40%, rgba(37, 99, 235, 0.15), rgba(29, 78, 216, 0.08), transparent 50%),
       radial-gradient(circle at 75% 60%, rgba(30, 58, 138, 0.18), rgba(30, 64, 175, 0.09) 20%, transparent 45%),
@@ -136,26 +137,31 @@ body,
   }
 }
 
-/* Nhẹ hơn: chỉ opacity + scale nhẹ — không dùng filter (hue-rotate rất tốn GPU) */
+/* Đổi màu nhẹ kiểu Terran — hue-rotate vừa phải + scale nhỏ */
 @keyframes waterGlow {
   0% {
-    opacity: 0.55;
+    opacity: 0.6;
+    filter: hue-rotate(0deg) brightness(1.1);
     transform: translateZ(0) scale(1);
   }
   25% {
-    opacity: 0.85;
-    transform: translateZ(0) scale(1.02);
+    opacity: 0.8;
+    filter: hue-rotate(45deg) brightness(1.2);
+    transform: translateZ(0) scale(1.03);
   }
   50% {
-    opacity: 0.65;
+    opacity: 0.7;
+    filter: hue-rotate(-30deg) brightness(1.15);
     transform: translateZ(0) scale(1.01);
   }
   75% {
     opacity: 0.9;
-    transform: translateZ(0) scale(1.03);
+    filter: hue-rotate(60deg) brightness(1.25);
+    transform: translateZ(0) scale(1.04);
   }
   100% {
-    opacity: 0.55;
+    opacity: 0.6;
+    filter: hue-rotate(0deg) brightness(1.1);
     transform: translateZ(0) scale(1);
   }
 }
@@ -202,4 +208,253 @@ body,
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-4px); }
   75% { transform: translateX(4px); }
+}
+
+/* Technical skills — clean floating logos; frame + name only on hover */
+.skills-triangle-scene {
+  position: relative;
+  width: 100%;
+  min-height: clamp(24rem, 64vw, 32rem);
+  padding: 0.5rem 0.75rem 1.5rem;
+  overflow: visible;
+}
+
+.skills-triangle-glow {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: min(70%, 20rem);
+  height: min(55%, 14rem);
+  transform: translate(-50%, -50%) scale(1);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(251, 146, 60, 0.32) 0%,
+    rgba(234, 88, 12, 0.14) 35%,
+    rgba(59, 130, 246, 0.06) 55%,
+    transparent 75%
+  );
+  pointer-events: none;
+  filter: blur(22px);
+  transform-origin: center center;
+  animation: skills-glow-bloom 5.5s ease-in-out infinite;
+  will-change: transform, opacity, filter;
+}
+
+.skills-triangle-glow--core {
+  width: min(38%, 10rem);
+  height: min(28%, 7rem);
+  top: 48%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 200, 120, 0.4) 0%,
+    rgba(251, 146, 60, 0.18) 40%,
+    transparent 70%
+  );
+  filter: blur(14px);
+  opacity: 0.85;
+  animation: skills-glow-bloom-core 5.5s ease-in-out infinite;
+  animation-delay: -1.2s;
+}
+
+@keyframes skills-glow-bloom {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(0.78);
+    opacity: 0.45;
+    filter: blur(18px);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.22);
+    opacity: 0.95;
+    filter: blur(28px);
+  }
+}
+
+@keyframes skills-glow-bloom-core {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 0.35;
+    filter: blur(12px);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.35);
+    opacity: 1;
+    filter: blur(18px);
+  }
+}
+
+/* Tiny star-like sparks — only radiate outward from the center glow */
+.skills-spark-field {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+
+.skills-spark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--spark-size, 2px);
+  height: var(--spark-size, 2px);
+  margin: calc(var(--spark-size, 2px) / -2) 0 0 calc(var(--spark-size, 2px) / -2);
+  border-radius: 50%;
+  background: hsl(var(--spark-hue, 210) 70% 72% / 0.95);
+  box-shadow: 0 0 5px hsl(var(--spark-hue, 210) 90% 65% / 0.55);
+  animation: skills-spark-drift var(--spark-dur, 7s) linear infinite;
+  animation-delay: var(--spark-delay, 0s);
+  will-change: transform, opacity;
+}
+
+.skills-spark--gray {
+  background: rgba(203, 213, 225, 0.9);
+  box-shadow: 0 0 4px rgba(148, 163, 184, 0.45);
+}
+
+.skills-spark--blue {
+  background: rgba(96, 165, 250, 0.95);
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.55);
+}
+
+.skills-spark--red {
+  background: rgba(248, 113, 113, 0.92);
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
+}
+
+.skills-spark--orange {
+  background: rgba(251, 146, 60, 0.92);
+  box-shadow: 0 0 6px rgba(249, 115, 22, 0.5);
+}
+
+.skills-spark--white {
+  background: rgba(248, 250, 252, 0.95);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.45);
+}
+
+.skills-spark--purple {
+  background: rgba(192, 132, 252, 0.92);
+  box-shadow: 0 0 6px rgba(168, 85, 247, 0.5);
+}
+
+@keyframes skills-spark-drift {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--spark-angle)) translateY(0.4rem) scale(0.35);
+  }
+  8% {
+    opacity: 0.95;
+  }
+  55% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--spark-angle)) translateY(var(--spark-dist, 11rem)) scale(1.05);
+  }
+}
+
+.skills-icon-float {
+  transform: translateZ(0);
+}
+
+.skills-icon-float.is-floating {
+  animation: skills-float-y 3.4s ease-in-out infinite;
+}
+
+.skills-icon-float.is-sliding {
+  animation: none;
+}
+
+.skills-icon-hit {
+  cursor: default;
+}
+
+/* Default: no frame. Hover: frosted squircle like reference */
+.skills-icon-frame {
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  background: transparent;
+  box-shadow: none;
+  opacity: 0;
+  transform: scale(0.92);
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease,
+    background 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+  pointer-events: none;
+}
+
+.group:hover .skills-icon-frame {
+  opacity: 1;
+  transform: scale(1);
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 10px 24px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+}
+
+.skills-icon-label {
+  pointer-events: none;
+  position: absolute;
+  top: calc(100% - 0.15rem);
+  left: 50%;
+  z-index: 20;
+  transform: translate(-50%, 4px);
+  white-space: nowrap;
+  border-radius: 0.4rem;
+  background: rgba(8, 10, 16, 0.92);
+  padding: 0.2rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #fff;
+  opacity: 0;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.group:hover .skills-icon-label {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@keyframes skills-float-y {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -5px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-icon-float.is-floating {
+    animation: none;
+  }
+
+  .skills-triangle-glow,
+  .skills-triangle-glow--core {
+    animation: none;
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .skills-spark-field {
+    display: none;
+  }
 }
