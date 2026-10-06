@@ -6,7 +6,7 @@ type LanguageContextValue = {
   lang: Lang;
   setLang: (lang: Lang) => void;
   toggleLang: () => void;
-  t: (typeof translations)['en'];
+  t: (typeof translations)[Lang];
 };
 
 const translations = {
