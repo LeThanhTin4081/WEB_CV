@@ -4,3 +4,5 @@ dist
 .env
 md.md
 *.tsbuildinfo
+.superpowers/
+docs/superpowers/

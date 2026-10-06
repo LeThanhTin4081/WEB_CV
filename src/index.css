@@ -2,26 +2,174 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #f8fafc; /* Màu nền xám nhẹ dễ chịu */
+/* Self-hosted full font (không tách unicode-range) — tránh dấu tiếng Việt bị “ảo” */
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  src: url('/fonts/BeVietnamPro-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-@layer utilities {
-  .bg-animated-gradient {
-    /* Màu xanh dương tươi sáng, sinh động hơn */
-    background: linear-gradient(-45deg, #1e3a8a, #2563eb, #0f4a8a, #3b82f6);
-    background-size: 400% 400%;
-    animation: gradient-shift 10s ease infinite;
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  src: url('/fonts/BeVietnamPro-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  src: url('/fonts/BeVietnamPro-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  src: url('/fonts/BeVietnamPro-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  color: #fff;
+  /* CRITICAL: không tô nền body — nếu không sẽ che ambient */
+  background: transparent !important;
+  font-family: 'Be Vietnam Pro', ui-sans-serif, system-ui, sans-serif !important;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'kern' 1;
+  text-rendering: optimizeLegibility;
+}
+
+@layer components {
+  .black-background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, #0a1628, #0f172a, #020617);
+  }
+
+  /* Soft ambient glow — chỉ opacity/transform (tránh filter hue-rotate: rất nặng GPU) */
+  .water-glow {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    transform: translateZ(0);
+    will-change: opacity, transform;
+    background:
+      radial-gradient(circle at 25% 40%, rgba(37, 99, 235, 0.15), rgba(29, 78, 216, 0.08), transparent 50%),
+      radial-gradient(circle at 75% 60%, rgba(30, 58, 138, 0.18), rgba(30, 64, 175, 0.09) 20%, transparent 45%),
+      radial-gradient(circle at 50% 25%, rgba(14, 165, 233, 0.12), rgba(6, 182, 212, 0.06) 30%, transparent 45%),
+      radial-gradient(circle at 80% 30%, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.05) 25%, transparent 40%);
+    animation: waterGlow 18s ease-in-out infinite;
+  }
+
+  .retro-background {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.075;
+    background-image: url(/noise-terran.png);
+    background-repeat: repeat;
+    background-size: 128px;
+    transform: translateZ(0);
+  }
+
+  .app-content {
+    position: relative;
+    z-index: 3;
+  }
+
+  .surface-card {
+    @apply bg-slate-900/70 border border-white/10 rounded-2xl;
+  }
+
+  .chip-glass {
+    @apply inline-flex items-center gap-2.5 bg-white/5 border border-white/15 rounded-full pl-1.5 pr-3.5 py-1.5 text-white/90 hover:bg-white/10 hover:border-white/25 transition-colors duration-300 font-medium;
+  }
+
+  /* Terran-style: solid white circle, crisp CDN glyphs */
+  .chip-icon,
+  .icon-circle {
+    @apply inline-flex shrink-0 items-center justify-center rounded-full bg-white text-slate-900 border border-white/30;
+  }
+
+  .chip-icon {
+    @apply h-8 w-8;
+  }
+
+  .chip-icon img {
+    @apply h-[15px] w-[15px];
+  }
+
+  .icon-circle {
+    @apply h-10 w-10 hover:bg-white/90 transition-all duration-300;
+  }
+
+  .icon-circle img {
+    @apply h-[18px] w-[18px];
+  }
+
+  .btn-accent {
+    @apply inline-block bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold px-10 py-3.5 rounded-full shadow-lg shadow-blue-500/20 transition-all;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold text-white tracking-wide;
+  }
+
+  .section-rule {
+    @apply w-20 h-1.5 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full;
   }
 }
 
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* Nhẹ hơn: chỉ opacity + scale nhẹ — không dùng filter (hue-rotate rất tốn GPU) */
+@keyframes waterGlow {
+  0% {
+    opacity: 0.55;
+    transform: translateZ(0) scale(1);
+  }
+  25% {
+    opacity: 0.85;
+    transform: translateZ(0) scale(1.02);
+  }
+  50% {
+    opacity: 0.65;
+    transform: translateZ(0) scale(1.01);
+  }
+  75% {
+    opacity: 0.9;
+    transform: translateZ(0) scale(1.03);
+  }
+  100% {
+    opacity: 0.55;
+    transform: translateZ(0) scale(1);
+  }
 }
 
-/* Hiệu ứng ánh sáng lướt qua nút (Shimmer) */
+@media (prefers-reduced-motion: reduce) {
+  .water-glow {
+    animation: none;
+    opacity: 0.7;
+  }
+  .btn-shimmer::after {
+    animation: none;
+  }
+}
+
 @keyframes shimmer {
   0% { transform: translateX(-150%) skewX(-15deg); }
   50% { transform: translateX(200%) skewX(-15deg); }
@@ -40,7 +188,18 @@ body {
   left: 0;
   width: 40%;
   height: 100%;
-  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
   transform: translateX(-150%) skewX(-15deg);
   animation: shimmer 4s infinite ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
 }

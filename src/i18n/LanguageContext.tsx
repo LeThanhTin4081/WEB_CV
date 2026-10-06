@@ -128,12 +128,12 @@ const translations = {
     name: 'Lê Thành Tin',
     nameUpper: 'LÊ THÀNH TIN',
     nav: {
-      home: 'Home',
-      about: 'About',
-      experience: 'Experience',
-      projects: 'Projects',
-      skills: 'Skills',
-      contact: 'Contact',
+      home: 'Trang chủ',
+      about: 'Giới thiệu',
+      experience: 'Kinh nghiệm',
+      projects: 'Dự án',
+      skills: 'Kỹ năng',
+      contact: 'Liên hệ',
     },
     hero: {
       tagline: 'Data Science | Tìm hiểu về tôi!',
@@ -233,9 +233,9 @@ const translations = {
     footer: {
       blurb:
         'Data Science với đam mê ứng dụng những tiến bộ mới nhất trong nghiên cứu trí tuệ nhân tạo và dữ liệu để giải quyết các vấn đề thực tế. Luôn tìm kiếm cơ hội để học hỏi và phát triển trong lĩnh vực Data Science.',
-      quickLinks: 'Quick Links',
-      connect: 'Connect',
-      rights: 'Bảo lưu mọi quyền.',
+      quickLinks: 'Liên kết nhanh',
+      connect: 'Kết nối',
+      rights: 'All rights reserved.',
     },
   },
 } as const;
