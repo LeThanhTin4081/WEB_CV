@@ -1,62 +1,71 @@
-import type { ReactNode } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 
 type Skill = {
   name: string;
   tip?: string;
-  icon: ReactNode;
+  /** Iconify path, e.g. simple-icons/python */
+  icon?: string;
+  /** Hex color without # — only for mono simple-icons */
+  color?: string;
+  /** Full CDN URL for multi-color brand logos */
+  cdnUrl?: string;
+  /** Optional local fallback (rare tools not on CDN) */
+  localSrc?: string;
 };
 
 const iconClass = 'h-10 w-10 sm:h-11 sm:w-11 object-contain';
 
-const Img = ({ src, alt }: { src: string; alt: string }) => (
-  <img src={src} alt={alt} className={iconClass} loading="lazy" />
-);
-
-const PowerBiIcon = () => (
-  <svg viewBox="0 0 24 24" className={iconClass} aria-hidden="true">
-    <path d="M3 13.5h5v7.5H3v-7.5z" fill="#e6ad10" />
-    <path d="M9.5 8.5h5v12.5h-5V8.5z" fill="#f2c811" />
-    <path d="M16 3.5h5v17.5h-5V3.5z" fill="#f9e01e" />
-  </svg>
-);
-
-const OpenAiIcon = () => (
-  <svg viewBox="0 0 24 24" className={iconClass} fill="#10A37F" aria-hidden="true">
-    <path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.907 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.908 6.056 6.056 0 0 0-.747-7.065zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.079 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.373v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.083 3.75-5.833-3.387L14.61 7.09a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.678a.79.79 0 0 0-.405-.668zm2.01-3.023-.141-.085-4.774-2.782a.776.776 0 0 0-.785 0L9.409 9.13V6.8a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.166 4.671zm-12.64 4.135L5.666 11.59v-2.34a.08.08 0 0 1 .033-.061l4.83-2.787a.776.776 0 0 1 .785 0l4.774 2.762a.066.066 0 0 1 .028.061v2.34z" />
-  </svg>
-);
+const SkillIcon = ({ skill }: { skill: Skill }) => {
+  if (skill.localSrc) {
+    return <img src={skill.localSrc} alt={skill.name} className={iconClass} loading="lazy" decoding="async" />;
+  }
+  if (skill.cdnUrl) {
+    return <img src={skill.cdnUrl} alt={skill.name} className={iconClass} loading="lazy" decoding="async" />;
+  }
+  const src = `https://api.iconify.design/${skill.icon}.svg?color=%23${skill.color}&width=88&height=88`;
+  return <img src={src} alt={skill.name} className={iconClass} loading="lazy" decoding="async" />;
+};
 
 const skills: Skill[] = [
   // Data & Analytics
-  { name: 'Python', icon: <Img src="https://cdn.simpleicons.org/python/3776AB" alt="Python" /> },
-  { name: 'Excel', icon: <Img src="/skills/excel-wiki.svg" alt="Excel" /> },
-  { name: 'Power BI', icon: <PowerBiIcon /> },
-  { name: 'MongoDB', icon: <Img src="https://cdn.simpleicons.org/mongodb/47A248" alt="MongoDB" /> },
-  { name: 'PostgreSQL', icon: <Img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="PostgreSQL" /> },
-  { name: 'MySQL', icon: <Img src="/skills/mysql.svg" alt="MySQL" /> },
-  { name: 'ClickHouse', tip: 'ClickHouse (CH)', icon: <Img src="/skills/clickhouse.svg" alt="ClickHouse" /> },
+  { name: 'Python', icon: 'simple-icons/python', color: '3776AB' },
+  {
+    name: 'Excel',
+    cdnUrl: 'https://api.iconify.design/vscode-icons/file-type-excel.svg?width=88&height=88',
+  },
+  { name: 'Power BI', icon: 'simple-icons/powerbi', color: 'F2C811' },
+  { name: 'MongoDB', icon: 'simple-icons/mongodb', color: '47A248' },
+  { name: 'PostgreSQL', icon: 'simple-icons/postgresql', color: '4169E1' },
+  {
+    name: 'MySQL',
+    cdnUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg',
+  },
+  { name: 'ClickHouse', tip: 'ClickHouse (CH)', icon: 'simple-icons/clickhouse', color: 'FFCC01' },
   // Development
-  { name: 'JavaScript', icon: <Img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="JavaScript" /> },
-  { name: 'TypeScript', icon: <Img src="https://cdn.simpleicons.org/typescript/3178C6" alt="TypeScript" /> },
-  { name: 'React', icon: <Img src="https://cdn.simpleicons.org/react/61DAFB" alt="React" /> },
-  { name: 'NestJS', icon: <Img src="https://cdn.simpleicons.org/nestjs/E0234E" alt="NestJS" /> },
-  { name: 'Docker', icon: <Img src="https://cdn.simpleicons.org/docker/2496ED" alt="Docker" /> },
-  { name: 'VPS', tip: 'VPS (MobaXterm)', icon: <Img src="/skills/mobaxterm.jpg" alt="MobaXterm" /> },
+  { name: 'JavaScript', icon: 'simple-icons/javascript', color: 'F7DF1E' },
+  { name: 'TypeScript', icon: 'simple-icons/typescript', color: '3178C6' },
+  { name: 'React', icon: 'simple-icons/react', color: '61DAFB' },
+  { name: 'NestJS', icon: 'simple-icons/nestjs', color: 'E0234E' },
+  { name: 'Docker', icon: 'simple-icons/docker', color: '2496ED' },
+  { name: 'VPS', tip: 'VPS (MobaXterm)', localSrc: '/skills/mobaxterm.jpg' },
   // Collaboration, AI & Blockchain
-  { name: 'GitHub', icon: <Img src="https://cdn.simpleicons.org/github/181717" alt="GitHub" /> },
-  { name: 'GitLab', icon: <Img src="/skills/gitlab.svg" alt="GitLab" /> },
-  { name: 'Claude', icon: <Img src="/skills/claude.svg" alt="Claude" /> },
-  { name: 'Codex', tip: 'Codex (OpenAI)', icon: <OpenAiIcon /> },
-  { name: 'Antigravity', tip: 'Google Antigravity', icon: <Img src="/skills/antigravity.svg" alt="Antigravity" /> },
-  { name: 'Solidity', tip: 'Solidity (Blockchain)', icon: <Img src="https://cdn.simpleicons.org/solidity/363636" alt="Solidity" /> },
+  { name: 'GitHub', icon: 'simple-icons/github', color: 'FFFFFF' },
+  { name: 'GitLab', icon: 'simple-icons/gitlab', color: 'FC6D26' },
+  {
+    name: 'Claude',
+    tip: 'Claude (Anthropic)',
+    cdnUrl: 'https://api.iconify.design/simple-icons/claude.svg?color=%23D97757&width=88&height=88',
+  },
+  { name: 'Codex', tip: 'Codex (OpenAI)', icon: 'simple-icons/openai', color: '10A37F' },
+  { name: 'Antigravity', tip: 'Google Antigravity', localSrc: '/skills/antigravity.svg' },
+  { name: 'Solidity', tip: 'Solidity (Blockchain)', icon: 'simple-icons/solidity', color: 'A855F7' },
 ];
 
 const rows: Skill[][] = [
-  skills.slice(0, 7),   // Data & Analytics
-  skills.slice(7, 12),  // Development (core)
-  skills.slice(12, 16), // Infra + Git + AI start
-  skills.slice(16),     // AI / Blockchain
+  skills.slice(0, 7),
+  skills.slice(7, 12),
+  skills.slice(12, 16),
+  skills.slice(16),
 ];
 
 const Skills = () => {
@@ -65,10 +74,10 @@ const Skills = () => {
   return (
     <section className="scroll-mt-24">
       <div className="mb-10 text-center">
-        <h2 className="text-3xl font-bold uppercase tracking-wide text-slate-800">
+        <h2 className="section-title">
           {t.skills.titleLeft} {t.skills.titleRight}
         </h2>
-        <div className="mx-auto mt-4 h-1.5 w-20 rounded-full bg-blue-600" />
+        <div className="section-rule mx-auto mt-4" />
       </div>
 
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-8 pb-10 sm:gap-10">
@@ -79,10 +88,12 @@ const Skills = () => {
           >
             {row.map((skill) => (
               <div key={skill.name} className="group relative flex flex-col items-center">
-                <div className="relative flex h-12 w-12 items-center justify-center rounded-xl border border-transparent bg-transparent transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-blue-200 group-hover:bg-blue-50 group-hover:shadow-md sm:h-14 sm:w-14">
-                  <div className="transition-transform duration-300 group-hover:scale-110">{skill.icon}</div>
+                <div className="relative flex h-12 w-12 items-center justify-center rounded-xl border border-transparent bg-transparent transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-blue-400/30 group-hover:bg-white/10 group-hover:shadow-md sm:h-14 sm:w-14">
+                  <div className="transition-transform duration-300 group-hover:scale-110">
+                    <SkillIcon skill={skill} />
+                  </div>
                 </div>
-                <span className="pointer-events-none absolute top-full z-10 mt-2 translate-y-1 whitespace-nowrap rounded-md bg-slate-800 px-2.5 py-1 text-xs font-semibold text-white opacity-0 shadow-lg transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
+                <span className="pointer-events-none absolute top-full z-10 mt-2 translate-y-1 whitespace-nowrap rounded-md bg-slate-950/90 border border-white/10 px-2.5 py-1 text-xs font-semibold text-white opacity-0 shadow-lg transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
                   {skill.tip ?? skill.name}
                 </span>
               </div>

@@ -1,9 +1,13 @@
 import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
-import { Mail, Phone, MapPin, Linkedin, Send, CheckCircle, Loader2, Link } from 'lucide-react';
+import { Send, CheckCircle, Loader2, Link } from 'lucide-react';
+import { MailGlyph, PhoneGlyph, LinkedinGlyph, MapPinGlyph } from './BrandIcons';
 import { useLanguage } from '../i18n/LanguageContext';
 
 const shakeClass = 'animate-[shake_0.25s_ease-in-out]';
+
+const inputBase =
+  'w-full px-4 py-2.5 border rounded-lg bg-slate-900/60 text-white placeholder:text-white/30 focus:ring-2 focus:ring-cyan-500 outline-none transition shadow-sm text-sm';
 
 const Contact = () => {
   const { t } = useLanguage();
@@ -78,49 +82,34 @@ const Contact = () => {
   };
 
   return (
-    <section
-      id="contact"
-      className="scroll-mt-24 bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-100 max-w-5xl mx-auto"
-    >
-      <style>
-        {`
-          @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-3px); }
-            50% { transform: translateX(3px); }
-            75% { transform: translateX(-3px); }
-            100% { transform: translateX(0); }
-          }
-        `}
-      </style>
-
-      <div className="grid md:grid-cols-2">
-        <div className="p-6 sm:p-7 md:py-6 md:px-8 bg-gradient-to-br from-blue-700 to-blue-600 text-white flex flex-col justify-start">
-          <h2 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2 text-center">
+    <section className="scroll-mt-24">
+      <div className="surface-card overflow-hidden grid md:grid-cols-2 max-w-5xl mx-auto">
+        <div className="p-8 bg-gradient-to-br from-blue-600/30 to-cyan-700/20 border-b md:border-b-0 md:border-r border-white/10">
+          <h2 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2 text-center">
             {t.contact.title} <span className="animate-pulse">👋</span>
           </h2>
 
-          <p className="text-blue-50 mb-5 text-sm leading-relaxed text-justify opacity-95">
+          <p className="text-white/70 mb-5 text-sm leading-relaxed text-justify">
             {t.contact.intro}
           </p>
 
           <div className="space-y-4">
             <a href="mailto:lethanhtin.cv@gmail.com" className="flex items-center gap-3 group">
-              <div className="bg-white/20 p-2.5 rounded-lg group-hover:bg-white/30 transition-all shadow-sm">
-                <Mail size={20} className="text-white" />
+              <div className="icon-circle">
+                <MailGlyph size={18} />
               </div>
               <div>
-                <p className="text-xs text-blue-100 uppercase font-semibold tracking-wider">Email</p>
+                <p className="text-xs text-white/50 font-semibold tracking-wider">Email</p>
                 <p className="font-medium text-white text-sm group-hover:underline">lethanhtin.cv@gmail.com</p>
               </div>
             </a>
 
             <a href="tel:+84349249103" className="flex items-center gap-3 group">
-              <div className="bg-white/20 p-2.5 rounded-lg group-hover:bg-white/30 transition-all shadow-sm">
-                <Phone size={20} className="text-white" />
+              <div className="icon-circle">
+                <PhoneGlyph size={18} />
               </div>
               <div>
-                <p className="text-xs text-blue-100 uppercase font-semibold tracking-wider">{t.contact.phone}</p>
+                <p className="text-xs text-white/50 font-semibold tracking-wider">{t.contact.phone}</p>
                 <p className="font-medium text-white text-sm group-hover:underline">(+84) 349 249 103</p>
               </div>
             </a>
@@ -131,86 +120,88 @@ const Contact = () => {
               rel="noopener noreferrer"
               className="flex items-center gap-3 group"
             >
-              <div className="bg-white/20 p-2.5 rounded-lg group-hover:bg-white/30 transition-all shadow-sm">
-                <Linkedin size={20} className="text-white" />
+              <div className="icon-circle">
+                <LinkedinGlyph size={18} />
               </div>
               <div>
-                <p className="text-xs text-blue-100 uppercase font-semibold tracking-wider">LinkedIn</p>
+                <p className="text-xs text-white/50 font-semibold tracking-wider">LinkedIn</p>
                 <p className="font-medium text-white text-sm group-hover:underline">linkedin.com/in/lethanhtin4081</p>
               </div>
             </a>
 
             <div className="flex items-center gap-3 group">
-              <div className="bg-white/20 p-2.5 rounded-lg group-hover:bg-white/30 transition-all shadow-sm">
-                <MapPin size={20} className="text-white" />
+              <div className="icon-circle">
+                <MapPinGlyph size={18} />
               </div>
               <div>
-                <p className="text-xs text-blue-100 uppercase font-semibold tracking-wider">{t.contact.locationLabel}</p>
+                <p className="text-xs text-white/50 font-semibold tracking-wider">{t.contact.locationLabel}</p>
                 <p className="font-medium text-white text-sm">{t.contact.locationValue}</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="p-8 relative bg-slate-50/50">
+        <div className="p-8 relative bg-slate-950/40">
           <form ref={form} onSubmit={sendEmail} className="space-y-3">
             <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase mb-1">{t.contact.nameLabel}</label>
+              <label className="block text-xs font-bold text-white/50 mb-1">{t.contact.nameLabel}</label>
               <input
                 type="text"
                 name="user_name"
-                className={`w-full px-4 py-2.5 border rounded-lg bg-white 
-                  focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm text-sm
-                  ${errors.user_name ? `border-red-500 bg-red-50 ${shakeClass}` : 'border-slate-200'}`}
+                className={`${inputBase} ${
+                  errors.user_name ? `border-red-500 bg-red-500/10 ${shakeClass}` : 'border-white/10'
+                }`}
                 placeholder={t.contact.namePlaceholder}
               />
-              {errors.user_name && <p className="text-red-500 text-xs mt-1">{errors.user_name}</p>}
+              {errors.user_name && <p className="text-red-400 text-xs mt-1">{errors.user_name}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase mb-1">{t.contact.emailLabel}</label>
+              <label className="block text-xs font-bold text-white/50 mb-1">{t.contact.emailLabel}</label>
               <input
                 type="email"
                 name="user_email"
-                className={`w-full px-4 py-2.5 border rounded-lg bg-white 
-                  focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm text-sm
-                  ${errors.user_email ? `border-red-500 bg-red-50 ${shakeClass}` : 'border-slate-200'}`}
+                className={`${inputBase} ${
+                  errors.user_email ? `border-red-500 bg-red-500/10 ${shakeClass}` : 'border-white/10'
+                }`}
                 placeholder={t.contact.emailPlaceholder}
               />
-              {errors.user_email && <p className="text-red-500 text-xs mt-1">{errors.user_email}</p>}
+              {errors.user_email && <p className="text-red-400 text-xs mt-1">{errors.user_email}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase mb-1 flex items-center gap-1">
-                {t.contact.linkLabel} <Link size={12} className="text-blue-500" />
+              <label className="block text-xs font-bold text-white/50 mb-1 flex items-center gap-1">
+                {t.contact.linkLabel} <Link size={12} className="text-cyan-400" />
               </label>
               <input
                 type="url"
                 name="link_tai_lieu"
-                className="w-full px-4 py-2.5 border border-slate-200 rounded-lg bg-white 
-                  focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm text-sm"
+                className={`${inputBase} border-white/10`}
                 placeholder={t.contact.linkPlaceholder}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase mb-1">{t.contact.messageLabel}</label>
+              <label className="block text-xs font-bold text-white/50 mb-1">{t.contact.messageLabel}</label>
               <textarea
                 name="message"
                 rows={3}
-                className={`w-full px-4 py-2.5 border rounded-lg bg-white resize-none
-                  focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm text-sm
-                  ${errors.message ? `border-red-500 bg-red-50 ${shakeClass}` : 'border-slate-200'}`}
+                className={`${inputBase} resize-none ${
+                  errors.message ? `border-red-500 bg-red-500/10 ${shakeClass}` : 'border-white/10'
+                }`}
                 placeholder={t.contact.messagePlaceholder}
               />
-              {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
+              {errors.message && <p className="text-red-400 text-xs mt-1">{errors.message}</p>}
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className={`w-full font-bold py-2.5 rounded-lg transition-all duration-300 flex justify-center items-center gap-2 text-white shadow-md text-sm uppercase tracking-wide
-                ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5'}`}
+              className={`w-full font-bold py-2.5 rounded-full transition-all duration-300 flex justify-center items-center gap-2 text-white shadow-md text-sm tracking-wide ${
+                loading
+                  ? 'bg-gray-600 cursor-not-allowed'
+                  : 'bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 hover:shadow-lg hover:-translate-y-0.5'
+              }`}
             >
               {loading ? (
                 <>
@@ -224,17 +215,18 @@ const Contact = () => {
             </button>
 
             {success && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/95 backdrop-blur-md rounded-2xl z-20 animate-fade-in border border-green-100">
-                <div className="bg-green-100 p-3 rounded-full mb-3 animate-bounce">
-                  <CheckCircle className="w-10 h-10 text-green-600" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/95 backdrop-blur-md rounded-2xl z-20 border border-green-500/20">
+                <div className="bg-green-500/20 p-3 rounded-full mb-3 animate-bounce">
+                  <CheckCircle className="w-10 h-10 text-green-400" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-1">{t.contact.successTitle}</h3>
-                <p className="text-gray-500 text-center max-w-xs mb-5 text-sm px-4">
+                <h3 className="text-xl font-bold text-white mb-1">{t.contact.successTitle}</h3>
+                <p className="text-white/60 text-center max-w-xs mb-5 text-sm px-4">
                   {t.contact.successBody}
                 </p>
                 <button
+                  type="button"
                   onClick={() => setSuccess(false)}
-                  className="px-5 py-2 bg-slate-100 text-slate-600 font-bold rounded-lg hover:bg-slate-200 transition text-sm"
+                  className="px-5 py-2 bg-white/10 text-white/80 font-bold rounded-lg hover:bg-white/20 transition text-sm"
                 >
                   {t.contact.close}
                 </button>
