@@ -1,13 +1,16 @@
 import { Briefcase } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const tagClass =
   'text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-md font-semibold border border-slate-200 transition-all duration-300';
 
 const Experience = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="scroll-mt-24">
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold text-slate-800 uppercase tracking-wide">Kinh Nghiệm</h2>
+        <h2 className="text-3xl font-bold text-slate-800 uppercase tracking-wide">{t.experience.title}</h2>
         <div className="w-20 h-1.5 bg-blue-600 rounded-full mx-auto mt-4"></div>
       </div>
 
@@ -19,11 +22,15 @@ const Experience = () => {
             </div>
             <div>
               <h3 className="text-xl font-bold text-slate-800 group-hover:text-blue-600 transition leading-snug">
-                Social Media Data Analyst
+                {t.experience.role}
               </h3>
-              <p className="text-slate-700 font-medium mt-1">Reputyze Asia · Internship</p>
-              <p className="text-sm text-slate-500 mt-1">May 2026 - Oct 2026 · 6 tháng</p>
-              <p className="text-sm text-slate-500">Data Analyst Intern · Tại văn phòng</p>
+              <p className="text-slate-700 font-medium mt-1">{t.experience.company}</p>
+              <p className="text-sm text-slate-500 mt-1">
+                {t.experience.period} · {t.experience.months}
+              </p>
+              <p className="text-sm text-slate-500">
+                {t.experience.roleType} · {t.experience.onsite}
+              </p>
             </div>
           </div>
 
@@ -37,12 +44,12 @@ const Experience = () => {
           </div>
 
           <ul className="text-slate-600 text-sm mt-6 space-y-2.5 list-disc list-outside ml-5">
-            <li>Supported the development and operation of data collection workflows across <strong>Facebook</strong>, <strong>TikTok</strong>, and <strong>Threads</strong>, along with daily data quality checks.</li>
-            <li>Contributed to monitoring and alert workflows, including a <strong>Telegram Bot</strong> for negative sentiment and content alerts.</li>
-            <li>Developed a <strong>Chrome Extension</strong> for sentiment labeling and researched the use of <strong>Qwen2.5-7B</strong> on <strong>RunPod</strong> for sentiment classification.</li>
-            <li>Researched and experimented with <strong>MySQL</strong>, <strong>PostgreSQL</strong>, <strong>ClickHouse</strong>, and <strong>Elasticsearch</strong> for social media data storage, querying, and search.</li>
-            <li>Conducted research on <strong>CDP</strong>, <strong>CRM dashboards</strong>, and <strong>social media APIs</strong>, while supporting data and content preparation for proposals and pitching.</li>
-            <li>Supported market research and business reporting, including research on the <strong>Vietnam retail market in Q3 2026</strong>.</li>
+            <li>{t.experience.b1}</li>
+            <li>{t.experience.b2}</li>
+            <li>{t.experience.b3}</li>
+            <li>{t.experience.b4}</li>
+            <li>{t.experience.b5}</li>
+            <li>{t.experience.b6}</li>
           </ul>
         </div>
       </div>

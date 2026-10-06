@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 type Skill = {
   name: string;
@@ -27,39 +28,46 @@ const OpenAiIcon = () => (
 );
 
 const skills: Skill[] = [
+  // Data & Analytics
   { name: 'Python', icon: <Img src="https://cdn.simpleicons.org/python/3776AB" alt="Python" /> },
+  { name: 'Excel', icon: <Img src="/skills/excel-wiki.svg" alt="Excel" /> },
+  { name: 'Power BI', icon: <PowerBiIcon /> },
   { name: 'MongoDB', icon: <Img src="https://cdn.simpleicons.org/mongodb/47A248" alt="MongoDB" /> },
   { name: 'PostgreSQL', icon: <Img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="PostgreSQL" /> },
-  { name: 'ClickHouse', tip: 'ClickHouse (CH)', icon: <Img src="/skills/clickhouse.svg" alt="ClickHouse" /> },
   { name: 'MySQL', icon: <Img src="/skills/mysql.svg" alt="MySQL" /> },
-  { name: 'Power BI', icon: <PowerBiIcon /> },
+  { name: 'ClickHouse', tip: 'ClickHouse (CH)', icon: <Img src="/skills/clickhouse.svg" alt="ClickHouse" /> },
+  // Development
   { name: 'JavaScript', icon: <Img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="JavaScript" /> },
   { name: 'TypeScript', icon: <Img src="https://cdn.simpleicons.org/typescript/3178C6" alt="TypeScript" /> },
-  { name: 'GitHub', icon: <Img src="https://cdn.simpleicons.org/github/181717" alt="GitHub" /> },
-  { name: 'GitLab', icon: <Img src="/skills/gitlab.svg" alt="GitLab" /> },
   { name: 'React', icon: <Img src="https://cdn.simpleicons.org/react/61DAFB" alt="React" /> },
+  { name: 'NestJS', icon: <Img src="https://cdn.simpleicons.org/nestjs/E0234E" alt="NestJS" /> },
   { name: 'Docker', icon: <Img src="https://cdn.simpleicons.org/docker/2496ED" alt="Docker" /> },
   { name: 'VPS', tip: 'VPS (MobaXterm)', icon: <Img src="/skills/mobaxterm.jpg" alt="MobaXterm" /> },
+  // Collaboration, AI & Blockchain
+  { name: 'GitHub', icon: <Img src="https://cdn.simpleicons.org/github/181717" alt="GitHub" /> },
+  { name: 'GitLab', icon: <Img src="/skills/gitlab.svg" alt="GitLab" /> },
   { name: 'Claude', icon: <Img src="/skills/claude.svg" alt="Claude" /> },
   { name: 'Codex', tip: 'Codex (OpenAI)', icon: <OpenAiIcon /> },
   { name: 'Antigravity', tip: 'Google Antigravity', icon: <Img src="/skills/antigravity.svg" alt="Antigravity" /> },
-  { name: 'NestJS', icon: <Img src="https://cdn.simpleicons.org/nestjs/E0234E" alt="NestJS" /> },
-  { name: 'Excel', icon: <Img src="/skills/excel-wiki.svg" alt="Excel" /> },
   { name: 'Solidity', tip: 'Solidity (Blockchain)', icon: <Img src="https://cdn.simpleicons.org/solidity/363636" alt="Solidity" /> },
 ];
 
 const rows: Skill[][] = [
-  skills.slice(0, 6),
-  skills.slice(6, 12),
-  skills.slice(12, 16),
-  skills.slice(16, 19),
+  skills.slice(0, 7),   // Data & Analytics
+  skills.slice(7, 12),  // Development (core)
+  skills.slice(12, 16), // Infra + Git + AI start
+  skills.slice(16),     // AI / Blockchain
 ];
 
 const Skills = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="scroll-mt-24">
       <div className="mb-10 text-center">
-        <h2 className="text-3xl font-bold uppercase tracking-wide text-slate-800">Technical Skills</h2>
+        <h2 className="text-3xl font-bold uppercase tracking-wide text-slate-800">
+          {t.skills.titleLeft} {t.skills.titleRight}
+        </h2>
         <div className="mx-auto mt-4 h-1.5 w-20 rounded-full bg-blue-600" />
       </div>
 
@@ -67,9 +75,7 @@ const Skills = () => {
         {rows.map((row, rowIndex) => (
           <div
             key={rowIndex}
-            className={`flex flex-wrap items-center justify-center gap-6 sm:gap-9 ${
-              rowIndex % 2 === 1 ? 'sm:translate-x-3' : rowIndex === 2 ? 'sm:-translate-x-2' : ''
-            }`}
+            className="flex flex-wrap items-center justify-center gap-6 sm:gap-9"
           >
             {row.map((skill) => (
               <div key={skill.name} className="group relative flex flex-col items-center">

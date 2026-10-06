@@ -1,4 +1,5 @@
 import { Mail, Linkedin, Phone, Github } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const OrcidIcon = ({ size = 18 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -7,22 +8,22 @@ const OrcidIcon = ({ size = 18 }: { size?: number }) => (
 );
 
 const Hero = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative bg-animated-gradient text-white py-24 sm:py-32 overflow-hidden flex flex-col justify-center min-h-[600px]">
-      
       <div className="max-w-4xl mx-auto text-center px-4 relative z-10">
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl mb-4 drop-shadow-lg uppercase">
-          LÊ THÀNH TIN
+          {t.nameUpper}
         </h1>
         <div className="flex items-center justify-center gap-3 mb-10">
           <span className="h-px w-16 sm:w-24 bg-gradient-to-r from-transparent to-blue-300/60"></span>
           <p className="text-sm sm:text-base text-blue-100 font-medium tracking-widest uppercase drop-shadow-md text-center">
-            Data Science <span className="mx-2 text-blue-300/50">|</span> Get to know me!
+            {t.hero.tagline}
           </p>
           <span className="h-px w-16 sm:w-24 bg-gradient-to-l from-transparent to-blue-300/60"></span>
         </div>
-        
-        {/* Thông tin liên hệ nhanh */}
+
         <div className="flex flex-wrap justify-center gap-4 mb-12 text-sm font-medium text-blue-100">
           <a href="mailto:lethanhtin.cv@gmail.com" className="flex items-center gap-2 px-3 py-2 bg-white/10 rounded-full hover:bg-white/20 transition backdrop-blur-sm">
             <Mail size={18} /> lethanhtin.cv@gmail.com
@@ -41,9 +42,8 @@ const Hero = () => {
           </a>
         </div>
 
-        {/* Nút Gradient (giống nút Subscribe ảnh 2) + Hiệu ứng Shimmer */}
         <a href="#projects" className="btn-shimmer inline-block bg-gradient-to-r from-blue-600 to-cyan-400 text-white font-bold px-10 py-3.5 rounded-full shadow-lg shadow-blue-500/30 hover:shadow-cyan-500/50 transition-all transform hover:-translate-y-1">
-          Xem Dự Án Của Tôi
+          {t.hero.cta}
         </a>
       </div>
 

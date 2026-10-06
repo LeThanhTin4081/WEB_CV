@@ -1,4 +1,5 @@
 import { Mail, Linkedin, Github } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const OrcidIcon = ({ size = 20 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -7,31 +8,30 @@ const OrcidIcon = ({ size = 20 }: { size?: number }) => (
 );
 
 const Footer = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-slate-900 text-slate-300 py-12 border-t border-slate-800">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-8">
         <div>
-          <h3 className="text-xl font-bold text-white mb-4">Lê Thành Tin</h3>
-          <p className="text-sm leading-relaxed text-slate-400">
-            Data Science với đam mê ứng dụng những tiến bộ mới nhất trong nghiên cứu trí tuệ nhân tạo và dữ liệu để giải quyết các vấn đề thực tế. 
-            Luôn tìm kiếm cơ hội để học hỏi và phát triển trong lĩnh vực Data Science.
-          </p>
+          <h3 className="text-xl font-bold text-white mb-4">{t.name}</h3>
+          <p className="text-sm leading-relaxed text-slate-400">{t.footer.blurb}</p>
         </div>
 
         <div>
-          <h3 className="text-lg font-bold text-white mb-4">Liên Kết Nhanh</h3>
+          <h3 className="text-lg font-bold text-white mb-4">{t.footer.quickLinks}</h3>
           <ul className="space-y-2 text-sm">
-            <li><a href="#hero" className="hover:text-blue-400 transition">Trang chủ</a></li>
-            <li><a href="#about" className="hover:text-blue-400 transition">Giới thiệu</a></li>
-            <li><a href="#experience" className="hover:text-blue-400 transition">Kinh nghiệm</a></li>
-            <li><a href="#projects" className="hover:text-blue-400 transition">Dự án</a></li>
-            <li><a href="#skills" className="hover:text-blue-400 transition">Kỹ năng</a></li>
-            <li><a href="#contact" className="hover:text-blue-400 transition">Liên hệ</a></li>
+            <li><a href="#hero" className="hover:text-blue-400 transition">{t.nav.home}</a></li>
+            <li><a href="#about" className="hover:text-blue-400 transition">{t.nav.about}</a></li>
+            <li><a href="#experience" className="hover:text-blue-400 transition">{t.nav.experience}</a></li>
+            <li><a href="#projects" className="hover:text-blue-400 transition">{t.nav.projects}</a></li>
+            <li><a href="#skills" className="hover:text-blue-400 transition">{t.nav.skills}</a></li>
+            <li><a href="#contact" className="hover:text-blue-400 transition">{t.nav.contact}</a></li>
           </ul>
         </div>
 
         <div>
-          <h3 className="text-lg font-bold text-white mb-4">Kết Nối</h3>
+          <h3 className="text-lg font-bold text-white mb-4">{t.footer.connect}</h3>
           <div className="flex gap-3">
             <a href="mailto:lethanhtin.cv@gmail.com" className="bg-slate-800 p-2.5 rounded-lg hover:bg-blue-600 hover:text-white transition">
               <Mail size={20} />
@@ -55,12 +55,11 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Phần chân trang */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-slate-800">
         <div className="flex justify-center">
-            <div className="text-sm text-slate-400 bg-slate-800/50 px-5 py-2 rounded-full border border-slate-700 shadow-sm hover:border-slate-500 transition cursor-default">
-                © 2025 Le Thanh Tin. All rights reserved.
-            </div>
+          <div className="text-sm text-slate-400 bg-slate-800/50 px-5 py-2 rounded-full border border-slate-700 shadow-sm hover:border-slate-500 transition cursor-default">
+            © 2025 {t.name}. {t.footer.rights}
+          </div>
         </div>
       </div>
     </footer>
