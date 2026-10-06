@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
-import { Mail, Phone, MapPin, Send, CheckCircle, Loader2, Link } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Send, CheckCircle, Loader2, Link } from 'lucide-react';
 
 // Animation rung lắc khi lỗi
 const shakeClass = "animate-[shake_0.25s_ease-in-out]";
@@ -98,37 +98,52 @@ const Contact = () => {
       <div className="grid md:grid-cols-2">
 
         {/* CỘT TRÁI: Đã chỉnh màu sáng hơn & Giảm padding */}
-        <div className="p-8 bg-gradient-to-br from-blue-700 to-blue-600 text-white flex flex-col justify-center">
-          <h2 className="text-2xl font-bold mb-3 flex items-center justify-center gap-2 text-center">
+        <div className="p-6 sm:p-7 md:py-6 md:px-8 bg-gradient-to-br from-blue-700 to-blue-600 text-white flex flex-col justify-start">
+          <h2 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2 text-center">
             Liên Hệ <span className="animate-pulse">👋</span>
           </h2>
 
-          <p className="text-blue-50 mb-8 text-sm leading-relaxed text-justify opacity-95">
+          <p className="text-blue-50 mb-5 text-sm leading-relaxed text-justify opacity-95">
             Nếu bạn quan tâm đến cơ hội hợp tác, dự án khoa học dữ liệu hoặc đang tìm một ứng viên phù hợp, 
             tôi luôn sẵn sàng trao đổi. 
             Mọi thông tin sẽ được chuyển trực tiếp đến email cá nhân của tôi để phản hồi sớm nhất.
           </p>
 
-          <div className="space-y-5">
-            <div className="flex items-center gap-3 group">
+          <div className="space-y-4">
+            <a href="mailto:lethanhtin.cv@gmail.com" className="flex items-center gap-3 group">
               <div className="bg-white/20 p-2.5 rounded-lg group-hover:bg-white/30 transition-all shadow-sm">
                 <Mail size={20} className="text-white" />
               </div>
               <div>
                 <p className="text-xs text-blue-100 uppercase font-semibold tracking-wider">Email</p>
-                <p className="font-medium text-white text-sm">lethanhtin.cv@gmail.com</p>
+                <p className="font-medium text-white text-sm group-hover:underline">lethanhtin.cv@gmail.com</p>
               </div>
-            </div>
+            </a>
 
-            <div className="flex items-center gap-3 group">
+            <a href="tel:+84349249103" className="flex items-center gap-3 group">
               <div className="bg-white/20 p-2.5 rounded-lg group-hover:bg-white/30 transition-all shadow-sm">
                 <Phone size={20} className="text-white" />
               </div>
               <div>
                 <p className="text-xs text-blue-100 uppercase font-semibold tracking-wider">Điện thoại</p>
-                <p className="font-medium text-white text-sm">(+84) 349 249 103</p>
+                <p className="font-medium text-white text-sm group-hover:underline">(+84) 349 249 103</p>
               </div>
-            </div>
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/lethanhtin4081"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 group"
+            >
+              <div className="bg-white/20 p-2.5 rounded-lg group-hover:bg-white/30 transition-all shadow-sm">
+                <Linkedin size={20} className="text-white" />
+              </div>
+              <div>
+                <p className="text-xs text-blue-100 uppercase font-semibold tracking-wider">LinkedIn</p>
+                <p className="font-medium text-white text-sm group-hover:underline">linkedin.com/in/lethanhtin4081</p>
+              </div>
+            </a>
 
             <div className="flex items-center gap-3 group">
               <div className="bg-white/20 p-2.5 rounded-lg group-hover:bg-white/30 transition-all shadow-sm">

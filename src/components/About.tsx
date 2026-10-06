@@ -1,17 +1,17 @@
-import { Download } from 'lucide-react';
+import { Download, ExternalLink } from 'lucide-react';
 
 const About = () => {
   return (
     <section className="scroll-mt-24">
-      <div className="grid md:grid-cols-3 gap-12 items-end">
-        {/* Cột Ảnh */}
-        <div className="md:col-span-1">
-          <div className="relative">
+      <div className="grid md:grid-cols-3 gap-12 items-stretch">
+        {/* Cột Ảnh — cao bằng cột chữ trên desktop */}
+        <div className="md:col-span-1 min-h-0">
+          <div className="relative h-full min-h-[280px] md:min-h-0">
              {/* Nhớ chép ảnh thẻ của Tin vào public/avatar.jpg nhé */}
             <img 
               src="/avatar.jpg" 
               alt="Lê Thành Tin" 
-              className="rounded-2xl shadow-2xl w-full object-cover aspect-[3/4] border-4 border-white"
+              className="rounded-2xl shadow-2xl w-full h-full object-cover aspect-[3/4] md:aspect-auto border-4 border-white"
             />
             <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-blue-100 rounded-full -z-10"></div>
             <div className="absolute -top-4 -left-4 w-24 h-24 bg-blue-600 rounded-full -z-10 opacity-20"></div>
@@ -27,17 +27,17 @@ const About = () => {
           
           <h3 className="text-xl font-bold text-slate-700">Tóm Tắt Chuyên Môn</h3>
           <p className="text-slate-600 leading-relaxed text-justify">
-            Xin chào, tôi là <strong>Lê Thành Tin</strong>, hiện là sinh viên chuyên ngành <strong>Khoa học Dữ liệu</strong>. 
-            Với niềm đam mê khám phá insights từ các con số, tôi đã trang bị nền tảng vững chắc về Công nghệ thông tin và các công cụ phân tích dữ liệu.
+            Tôi tốt nghiệp chuyên ngành <strong>Khoa học Dữ liệu</strong>, hiện tập trung vào <strong>Analytics Engineering</strong>, với sự quan tâm mạnh mẽ tới Công nghệ và AI.
+            Tôi thích làm việc trực tiếp với dữ liệu — tổ chức, biến đổi dữ liệu, cải thiện quy trình và xây dựng các bộ dữ liệu ổn định, sẵn sàng cho phân tích.
             <br/><br/>
-            Dù đang ngồi trên ghế nhà trường, tôi luôn chủ động trau dồi kỹ năng thực tế qua các dự án cá nhân về Excel, SQL, Python và Power BI. 
-            Tôi đang tìm kiếm cơ hội thực tập để áp dụng kiến thức học thuật vào môi trường doanh nghiệp thực tế.
+            Tôi cũng đang tìm hiểu cách AI hỗ trợ quy trình dữ liệu và tự động hóa, giúp các thao tác hiệu quả, dễ mở rộng và thực tế hơn.
+            Tôi luôn sẵn sàng với những cơ hội mới, sự hợp tác và những kết nối ý nghĩa.
           </p>
 
           {/* Box Học vấn */}
-          <div className="bg-white p-5 border-l-4 border-blue-600 shadow-md rounded-r-lg mt-6">
+          <div className="bg-white p-5 border-l-4 border-blue-600 shadow-md rounded-r-lg">
             <h4 className="font-bold text-lg text-slate-900">Trường Đại học Giao thông Vận tải TP.HCM (UTH)</h4>
-            <p className="text-sm text-slate-500 mb-2">09/2023 - Hiện tại (Đang học)</p>
+            <p className="text-sm text-slate-500 mb-2">09/2023 - 12/2026</p>
             
             <div className="space-y-1">
               <p className="text-blue-700 font-medium">
@@ -47,7 +47,7 @@ const About = () => {
 
             <div className="mt-3 pt-3 border-t border-slate-100">
               <p className="text-sm text-slate-700">
-                <strong>GPA tích lũy:</strong> <span className="font-bold text-blue-600">3.2/4.0</span>
+                <strong>GPA tích lũy:</strong> <span className="font-bold text-blue-600">3.25/4.0</span>
               </p>
             </div>
           </div>
@@ -55,15 +55,23 @@ const About = () => {
         </div>
       </div>
 
-      {/* Download Resume */}
+      {/* Resume */}
       <div className="mt-24 max-w-3xl mx-auto">
         <h2 className="text-3xl font-bold text-slate-800 text-center mb-8">Resume</h2>
-        <div className="bg-slate-100 px-6 py-4 flex items-center justify-between hover:bg-slate-200 transition-colors">
-          <span className="text-slate-700 text-sm font-medium">TinLeThanh_CV (pdf)</span>
+        <div className="bg-slate-100 px-6 py-4 flex items-center justify-between gap-4 hover:bg-slate-200 transition-colors">
+          <a
+            href="/TinLeThanh_CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-slate-700 text-sm font-medium hover:text-blue-700 transition-colors"
+          >
+            TinLeThanh_CV (pdf)
+            <ExternalLink size={14} className="text-slate-400" />
+          </a>
           <a 
             href="/TinLeThanh_CV.pdf" 
             download="TinLeThanh_CV.pdf"
-            className="flex items-center gap-2 text-slate-500 hover:text-slate-800 text-sm transition-colors"
+            className="flex items-center gap-2 text-slate-500 hover:text-slate-800 text-sm transition-colors shrink-0"
           >
             <Download size={16} /> Download
           </a>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Tin Thanh Le">
+  <circle cx="32" cy="32" r="30" fill="#111827"/>
+  <g fill="#f3f4f6">
+    <!-- T bar -->
+    <rect x="14" y="15" width="26" height="9" rx="2"/>
+    <!-- Stem upper -->
+    <path d="M27 24h10v11l-5 4-5-4V24z"/>
+    <!-- Stem lower after slash -->
+    <path d="M23 43l9-7 9 7v7a2 2 0 0 1-2 2H25a2 2 0 0 1-2-2v-7z"/>
+    <!-- Speed lines -->
+    <rect x="43" y="16.5" width="11" height="2.4" rx="1.2"/>
+    <rect x="43" y="20.8" width="8" height="2.4" rx="1.2"/>
+    <rect x="43" y="25.1" width="5" height="2.4" rx="1.2"/>
+  </g>
+</svg>
