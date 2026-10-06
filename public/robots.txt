@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lethanhtin4081.github.io/WEB_CV/sitemap.xml

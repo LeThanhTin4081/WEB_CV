@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 
 type Skill = {
@@ -143,14 +143,16 @@ function useTriangleMotion(enabled: boolean) {
     if (!enabled) return undefined;
 
     let raf = 0;
+    let holdTimer = 0;
     let phase: MotionPhase = 'outer-move';
-    let phaseStarted = performance.now();
+    let phaseStarted = 0;
     let outerBase = 0;
     let innerBase = 0;
     let lastOuter = -1;
     let lastInner = -1;
     let lastMoving = false;
     let lastLayer: 'outer' | 'inner' = 'outer';
+    let running = true;
 
     const publish = (nextOuter: number, nextInner: number, moving: boolean, layer: 'outer' | 'inner') => {
       if (nextOuter !== lastOuter) {
@@ -171,38 +173,136 @@ function useTriangleMotion(enabled: boolean) {
       }
     };
 
-    const tick = (now: number) => {
+    const finishNotch = (now: number) => {
+      if (phase === 'outer-move') {
+        outerBase += 1;
+        publish(outerBase, innerBase, false, 'inner');
+        phase = 'inner-move';
+      } else {
+        innerBase += 1;
+        publish(outerBase, innerBase, false, 'outer');
+        phase = 'outer-move';
+      }
+      phaseStarted = now;
+      startMove();
+    };
+
+    const moveTick = (now: number) => {
+      if (!running) return;
       const elapsed = now - phaseStarted;
       const moveT = Math.min(1, elapsed / MOVE_MS);
       const eased = easeInOutCubic(moveT);
-      const moving = elapsed < MOVE_MS;
 
       if (phase === 'outer-move') {
-        publish(outerBase + eased, innerBase, moving, 'outer');
-        if (elapsed >= NOTCH_MS) {
-          outerBase += 1;
-          publish(outerBase, innerBase, false, 'inner');
-          phase = 'inner-move';
-          phaseStarted = now;
-        }
+        publish(outerBase + eased, innerBase, true, 'outer');
       } else {
-        publish(outerBase, innerBase + eased, moving, 'inner');
-        if (elapsed >= NOTCH_MS) {
-          innerBase += 1;
-          publish(outerBase, innerBase, false, 'outer');
-          phase = 'outer-move';
-          phaseStarted = now;
-        }
+        publish(outerBase, innerBase + eased, true, 'inner');
       }
 
-      raf = requestAnimationFrame(tick);
+      if (moveT < 1) {
+        raf = requestAnimationFrame(moveTick);
+        return;
+      }
+
+      // Snap to end of notch travel, then idle without RAF until next notch.
+      if (phase === 'outer-move') {
+        publish(outerBase + 1, innerBase, false, 'outer');
+      } else {
+        publish(outerBase, innerBase + 1, false, 'inner');
+      }
+
+      const holdMs = Math.max(0, NOTCH_MS - MOVE_MS);
+      holdTimer = window.setTimeout(() => finishNotch(performance.now()), holdMs);
     };
 
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    const startMove = () => {
+      phaseStarted = performance.now();
+      raf = requestAnimationFrame(moveTick);
+    };
+
+    startMove();
+
+    return () => {
+      running = false;
+      cancelAnimationFrame(raf);
+      window.clearTimeout(holdTimer);
+    };
   }, [enabled]);
 
   return { outerSteps, innerSteps, activeLayer, isMoving };
+}
+
+type PerfTier = 'full' | 'lite' | 'off';
+
+function useSkillsPerf() {
+  const [tier, setTier] = useState<PerfTier>('full');
+  const [inView, setInView] = useState(false);
+  const sceneRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const reduceMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const liteMq = window.matchMedia(
+      '(max-width: 768px), (pointer: coarse), (update: slow), (prefers-reduced-data: reduce)',
+    );
+
+    const sync = () => {
+      if (reduceMq.matches) {
+        setTier('off');
+        return;
+      }
+      setTier(liteMq.matches ? 'lite' : 'full');
+    };
+
+    sync();
+    reduceMq.addEventListener('change', sync);
+    liteMq.addEventListener('change', sync);
+    return () => {
+      reduceMq.removeEventListener('change', sync);
+      liteMq.removeEventListener('change', sync);
+    };
+  }, []);
+
+  useEffect(() => {
+    const el = sceneRef.current;
+    if (!el) return undefined;
+
+    const io = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting && entry.intersectionRatio > 0.12),
+      { threshold: [0, 0.12, 0.35], rootMargin: '80px 0px' },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [tier]);
+
+  return { tier, inView, sceneRef };
+}
+
+const SPARK_TONES = ['gray', 'blue', 'red', 'orange', 'white', 'purple'] as const;
+
+function SparkField({ count }: { count: number }) {
+  if (count <= 0) return null;
+  return (
+    <div className="skills-spark-field" aria-hidden>
+      {Array.from({ length: count }, (_, i) => {
+        const tone = SPARK_TONES[i % SPARK_TONES.length];
+        return (
+          <span
+            key={i}
+            className={`skills-spark skills-spark--${tone}`}
+            style={
+              {
+                '--spark-angle': `${(i / count) * 360 + (i % 7) * 9}deg`,
+                '--spark-delay': `${(i % 12) * 0.55}s`,
+                '--spark-dur': `${6.5 + (i % 8) * 0.9}s`,
+                '--spark-size': `${1.2 + (i % 5) * 0.55}px`,
+                '--spark-dist': `${39 + (i % 6) * 6.3}rem`,
+              } as CSSProperties
+            }
+          />
+        );
+      })}
+    </div>
+  );
 }
 
 const SkillMarker = ({
@@ -267,15 +367,9 @@ const StaticSkillGrid = () => (
 
 const Skills = () => {
   const { t } = useLanguage();
-  const [motionEnabled, setMotionEnabled] = useState(true);
-
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const sync = () => setMotionEnabled(!mq.matches);
-    sync();
-    mq.addEventListener('change', sync);
-    return () => mq.removeEventListener('change', sync);
-  }, []);
+  const { tier, inView, sceneRef } = useSkillsPerf();
+  const motionEnabled = tier !== 'off' && inView;
+  const sparkCount = tier === 'full' ? 28 : tier === 'lite' ? 12 : 0;
 
   const { outerSteps, innerSteps, activeLayer, isMoving } = useTriangleMotion(motionEnabled);
 
@@ -297,31 +391,16 @@ const Skills = () => {
         <div className="section-rule mx-auto mt-4" />
       </div>
 
-      {motionEnabled ? (
-        <div className="skills-triangle-scene mx-auto max-w-3xl pb-10">
+      {tier === 'off' ? (
+        <StaticSkillGrid />
+      ) : (
+        <div
+          ref={sceneRef}
+          className={`skills-triangle-scene mx-auto max-w-3xl pb-10 ${tier === 'lite' ? 'skills-perf-lite' : ''} ${inView ? '' : 'skills-scene--paused'}`}
+        >
           <div className="skills-triangle-glow" aria-hidden />
           <div className="skills-triangle-glow skills-triangle-glow--core" aria-hidden />
-          <div className="skills-spark-field" aria-hidden>
-            {Array.from({ length: 44 }, (_, i) => {
-              const tones = ['gray', 'blue', 'red', 'orange', 'white', 'purple'] as const;
-              const tone = tones[i % tones.length];
-              return (
-                <span
-                  key={i}
-                  className={`skills-spark skills-spark--${tone}`}
-                  style={
-                    {
-                      '--spark-angle': `${(i / 44) * 360 + (i % 7) * 9}deg`,
-                      '--spark-delay': `${(i % 12) * 0.55}s`,
-                      '--spark-dur': `${6.5 + (i % 8) * 0.9}s`,
-                      '--spark-size': `${1.2 + (i % 5) * 0.55}px`,
-                      '--spark-dist': `${39 + (i % 6) * 6.3}rem`,
-                    } as CSSProperties
-                  }
-                />
-              );
-            })}
-          </div>
+          <SparkField count={sparkCount} />
 
           {outerSkills.map((skill, index) => {
             const { x, y } = positionOnSlotRing(OUTER_SLOTS, index, outerSteps);
@@ -332,7 +411,7 @@ const Skills = () => {
                 skill={skill}
                 layer="outer"
                 floatIndex={index}
-                floating={floating}
+                floating={floating && inView}
                 style={{ left: `${x}%`, top: `${y}%` }}
               />
             );
@@ -347,14 +426,12 @@ const Skills = () => {
                 skill={skill}
                 layer="inner"
                 floatIndex={index + 3}
-                floating={floating}
+                floating={floating && inView}
                 style={{ left: `${x}%`, top: `${y}%` }}
               />
             );
           })}
         </div>
-      ) : (
-        <StaticSkillGrid />
       )}
     </section>
   );

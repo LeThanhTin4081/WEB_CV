@@ -24,6 +24,7 @@ const translations = {
     hero: {
       tagline: 'Data Science | Get to know me!',
       cta: 'View My Projects',
+      ctaContact: 'Contact Me',
     },
     about: {
       title: 'About',
@@ -67,6 +68,13 @@ const translations = {
     },
     projects: {
       title: 'Featured Projects',
+      filterAll: 'All',
+      filterData: 'Data',
+      filterDashboard: 'Dashboard',
+      filterMl: 'ML',
+      code: 'GitHub',
+      live: 'Live demo',
+      empty: 'No projects in this category yet.',
       p1b1:
         'Identified logistics bottlenecks averaging 5.25 days by designing an ELT pipeline that processed 51,290 raw records into a normalized 3NF database using advanced T-SQL (CTEs, Window Functions).',
       p1b2:
@@ -138,6 +146,7 @@ const translations = {
     hero: {
       tagline: 'Data Science | Tìm hiểu về tôi!',
       cta: 'Xem Dự Án Của Tôi',
+      ctaContact: 'Liên Hệ',
     },
     about: {
       title: 'About',
@@ -181,6 +190,13 @@ const translations = {
     },
     projects: {
       title: 'Featured Projects',
+      filterAll: 'Tất cả',
+      filterData: 'Data',
+      filterDashboard: 'Dashboard',
+      filterMl: 'ML',
+      code: 'GitHub',
+      live: 'Xem demo',
+      empty: 'Chưa có dự án trong danh mục này.',
       p1b1:
         'Phân tích và phát hiện điểm nghẽn logistics kéo dài trung bình 5.25 ngày bằng cách thiết kế đường ống dẫn dữ liệu ELT, xử lý 51.290 bản ghi thô vào cơ sở dữ liệu chuẩn hóa 3NF sử dụng T-SQL nâng cao (CTEs, Window Functions).',
       p1b2:

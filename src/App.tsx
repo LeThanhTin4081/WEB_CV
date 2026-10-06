@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Menu, X } from 'lucide-react';
 import AmbientLayers from './components/AmbientLayers';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -10,29 +11,97 @@ import Footer from './components/Footer';
 import { LanguageProvider, useLanguage } from './i18n/LanguageContext';
 
 const navLinkClass =
-  'px-4 py-2 rounded-full text-white/70 font-medium hover:bg-white/10 hover:text-white transition-all';
+  'px-4 py-2 rounded-full font-medium transition-all';
+
+const mobileNavLinkClass =
+  'block w-full rounded-xl px-4 py-3 text-base font-medium transition-colors';
+
+const SECTION_IDS = ['hero', 'about', 'experience', 'projects', 'skills', 'contact'] as const;
+type SectionId = (typeof SECTION_IDS)[number];
+
+function navLinkActiveClass(active: boolean, mobile = false) {
+  if (mobile) {
+    return active
+      ? `${mobileNavLinkClass} bg-cyan-500/15 text-cyan-200`
+      : `${mobileNavLinkClass} text-white/80 hover:bg-white/10 hover:text-white`;
+  }
+  return active
+    ? `${navLinkClass} bg-white/15 text-cyan-300`
+    : `${navLinkClass} text-white/70 hover:bg-white/10 hover:text-white`;
+}
 
 function AppShell() {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<SectionId>('hero');
   const { lang, setLang, t } = useLanguage();
+
+  const navItems = [
+    { href: '#hero', id: 'hero' as const, label: t.nav.home },
+    { href: '#about', id: 'about' as const, label: t.nav.about },
+    { href: '#experience', id: 'experience' as const, label: t.nav.experience },
+    { href: '#projects', id: 'projects' as const, label: t.nav.projects },
+    { href: '#skills', id: 'skills' as const, label: t.nav.skills },
+    { href: '#contact', id: 'contact' as const, label: t.nav.contact },
+  ];
 
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
 
   useEffect(() => {
+    if (!mobileOpen) return undefined;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
+
+  useEffect(() => {
     let ticking = false;
+
+    const updateFromScroll = () => {
+      const totalScroll =
+        window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      const docHeight = Math.max(
+        document.documentElement.scrollHeight,
+        document.body.scrollHeight,
+      );
+      const windowHeight = docHeight - window.innerHeight;
+      setScrollProgress(windowHeight > 0 ? Math.min(1, totalScroll / windowHeight) : 0);
+
+      // Activate a section once its top crosses ~40% down the viewport
+      // (so Skills highlights while the section is on screen, not only when near the nav).
+      const marker = totalScroll + window.innerHeight * 0.4;
+      let current: SectionId = 'hero';
+      for (const id of SECTION_IDS) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top + totalScroll;
+        if (top <= marker) current = id;
+      }
+      // Near page bottom: force Contact so the last link can activate.
+      if (windowHeight > 0 && totalScroll >= windowHeight - 8) {
+        current = 'contact';
+      }
+      setActiveSection(current);
+    };
+
     const handleScroll = () => {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
-        const totalScroll = document.documentElement.scrollTop;
-        const windowHeight =
-          document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        setScrollProgress(windowHeight > 0 ? totalScroll / windowHeight : 0);
+        updateFromScroll();
         ticking = false;
       });
     };
+
+    updateFromScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     const observer = new IntersectionObserver(
@@ -59,22 +128,27 @@ function AppShell() {
     <main className="relative min-h-screen bg-transparent text-white font-sans">
       <AmbientLayers />
 
-      <div className="app-content">
       <div
-        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-600 to-cyan-500 z-[60] transition-all duration-150 ease-out"
+        className="pointer-events-none fixed top-0 left-0 z-[100] h-1 bg-gradient-to-r from-blue-600 to-cyan-500 transition-[width] duration-150 ease-out"
         style={{ width: `${scrollProgress * 100}%` }}
+        aria-hidden
       />
 
+      <div className="app-content">
       <nav className="sticky top-0 z-50 bg-slate-950/85 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-end gap-3">
           <div className="flex items-center gap-1 sm:gap-2">
             <div className="hidden md:flex items-center gap-1">
-              <a href="#hero" className={navLinkClass}>{t.nav.home}</a>
-              <a href="#about" className={navLinkClass}>{t.nav.about}</a>
-              <a href="#experience" className={navLinkClass}>{t.nav.experience}</a>
-              <a href="#projects" className={navLinkClass}>{t.nav.projects}</a>
-              <a href="#skills" className={navLinkClass}>{t.nav.skills}</a>
-              <a href="#contact" className={navLinkClass}>{t.nav.contact}</a>
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className={navLinkActiveClass(activeSection === item.id)}
+                  aria-current={activeSection === item.id ? 'true' : undefined}
+                >
+                  {item.label}
+                </a>
+              ))}
             </div>
 
             <div
@@ -103,9 +177,50 @@ function AppShell() {
                 EN
               </button>
             </div>
+
+            <button
+              type="button"
+              className="md:hidden ml-1 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 hover:bg-white/10 hover:text-white transition-colors outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50"
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-nav-panel"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              onClick={() => setMobileOpen((open) => !open)}
+            >
+              {mobileOpen ? <X size={20} strokeWidth={2} /> : <Menu size={20} strokeWidth={2} />}
+            </button>
+          </div>
+        </div>
+
+        <div
+          id="mobile-nav-panel"
+          className={`md:hidden overflow-hidden border-t border-white/10 bg-slate-950/95 backdrop-blur-md transition-[max-height,opacity] duration-300 ease-out ${
+            mobileOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 border-t-transparent'
+          }`}
+        >
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-col gap-1">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className={navLinkActiveClass(activeSection === item.id, true)}
+                aria-current={activeSection === item.id ? 'true' : undefined}
+                onClick={() => setMobileOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
           </div>
         </div>
       </nav>
+
+      {mobileOpen && (
+        <button
+          type="button"
+          className="md:hidden fixed inset-0 z-40 bg-black/40"
+          aria-label="Close menu overlay"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
 
       <div id="hero" className="scroll-mt-24"><Hero /></div>
 

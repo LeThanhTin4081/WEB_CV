@@ -51,6 +51,12 @@ body,
   text-rendering: optimizeLegibility;
 }
 
+/* Clip horizontal overflow from sparks without breaking scroll metrics on <html> */
+body,
+#root {
+  overflow-x: clip;
+}
+
 @layer components {
   .black-background {
     position: fixed;
@@ -126,6 +132,10 @@ body,
 
   .btn-accent {
     @apply inline-block bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold px-10 py-3.5 rounded-full shadow-lg shadow-blue-500/20 transition-all;
+  }
+
+  .btn-ghost {
+    @apply inline-block border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 text-white/85 hover:text-white font-bold px-10 py-3.5 rounded-full transition-all;
   }
 
   .section-title {
@@ -216,7 +226,7 @@ body,
   width: 100%;
   min-height: clamp(24rem, 64vw, 32rem);
   padding: 0.5rem 0.75rem 1.5rem;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .skills-triangle-glow {
@@ -457,4 +467,27 @@ body,
   .skills-spark-field {
     display: none;
   }
+}
+
+/* Pause CSS work when Skills is off-screen */
+.skills-scene--paused .skills-triangle-glow,
+.skills-scene--paused .skills-triangle-glow--core,
+.skills-scene--paused .skills-spark,
+.skills-scene--paused .skills-icon-float.is-floating {
+  animation-play-state: paused;
+}
+
+/* Mobile / lite: fewer GPU hints, calmer float */
+.skills-perf-lite .skills-spark {
+  box-shadow: none;
+}
+
+.skills-perf-lite .skills-icon-float.is-floating {
+  animation-duration: 4.8s;
+}
+
+.skills-perf-lite .skills-triangle-glow,
+.skills-perf-lite .skills-triangle-glow--core {
+  animation-duration: 7.5s;
+  will-change: auto;
 }

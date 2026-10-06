@@ -41,9 +41,14 @@ const Hero = () => {
           </a>
         </div>
 
-        <a href="#projects" className="btn-shimmer btn-accent hover:-translate-y-1">
-          {t.hero.cta}
-        </a>
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          <a href="#projects" className="btn-shimmer btn-accent hover:-translate-y-1">
+            {t.hero.cta}
+          </a>
+          <a href="#contact" className="btn-ghost hover:-translate-y-1">
+            {t.hero.ctaContact}
+          </a>
+        </div>
       </div>
     </section>
   );

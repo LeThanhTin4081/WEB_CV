@@ -1,100 +1,177 @@
+import { useMemo, useState } from 'react';
 import { Github, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
+
+type ProjectCategory = 'data' | 'dashboard' | 'ml';
+type FilterId = 'all' | ProjectCategory;
+
+type Project = {
+  id: string;
+  title: string;
+  accent: string;
+  categories: ProjectCategory[];
+  tags: string[];
+  bullets: [string, string, string];
+  github: string;
+  live: string;
+  liveLabel: string;
+};
 
 const tagClass =
   'text-xs bg-white/5 text-white/70 px-2.5 py-1 rounded-md font-semibold border border-white/10 group-hover:bg-blue-500/20 group-hover:text-cyan-200 group-hover:border-blue-400/30 transition-all duration-300';
 
-const linkClass =
-  'flex items-center gap-1.5 text-sm font-bold text-white/60 hover:text-cyan-300 transition';
-
 const Projects = () => {
   const { t } = useLanguage();
+  const [filter, setFilter] = useState<FilterId>('all');
+
+  const projects: Project[] = useMemo(
+    () => [
+      {
+        id: 'ecommerce',
+        title: 'End-to-End E-Commerce Customer & Sales Analytics',
+        accent: 'from-cyan-500/35 via-blue-600/20 to-transparent',
+        categories: ['data', 'dashboard', 'ml'],
+        tags: ['SQL Server', 'Python', 'Streamlit'],
+        bullets: [t.projects.p1b1, t.projects.p1b2, t.projects.p1b3],
+        github: 'https://github.com/LeThanhTin4081/SQL-ECommerce-Analytics-With-Machine-Learning',
+        live: 'https://ecommerce-annual-report-2018.streamlit.app/',
+        liveLabel: 'Streamlit',
+      },
+      {
+        id: 'housing',
+        title: 'Ho Chi Minh City Housing Market Analysis 2021 – 2025',
+        accent: 'from-orange-400/30 via-amber-600/15 to-transparent',
+        categories: ['data', 'dashboard'],
+        tags: ['Python (Selenium, BeautifulSoup)', 'Power BI'],
+        bullets: [t.projects.p2b1, t.projects.p2b2, t.projects.p2b3],
+        github: 'https://github.com/LeThanhTin4081/hochiminh-city-house-price-analysis',
+        live: 'https://app.powerbi.com/view?r=eyJrIjoiYTE3OWVkZWMtYzMzZi00N2IwLWE4MDMtOTdhNTQzNzM4YWQ4IiwidCI6ImVkOGYxNjczLTM4OTAtNGRiNC1hM2YwLTk3YWQ5NDI3Yzc0ZiIsImMiOjEwfQ%3D%3D',
+        liveLabel: 'Power BI',
+      },
+      {
+        id: 'commodity',
+        title: 'Essential Commodity Price Analysis in Vietnam 2005 - 2025',
+        accent: 'from-emerald-400/30 via-teal-700/15 to-transparent',
+        categories: ['data', 'dashboard'],
+        tags: ['Excel (Power Query)', 'Python', 'Power BI'],
+        bullets: [t.projects.p3b1, t.projects.p3b2, t.projects.p3b3],
+        github: 'https://github.com/LeThanhTin4081/phan-tich-bien-dong-gia-ca-vietnam-2005-2025',
+        live: 'https://app.powerbi.com/view?r=eyJrIjoiMDJlNjAwZTEtNTVjOS00Njc3LWJlMTItNGYxM2FmZmM3YjhkIiwidCI6ImVkOGYxNjczLTM4OTAtNGRiNC1hM2YwLTk3YWQ5NDI3Yzc0ZiIsImMiOjEwfQ%3D%3D',
+        liveLabel: 'Power BI',
+      },
+    ],
+    [t],
+  );
+
+  const filters: { id: FilterId; label: string }[] = [
+    { id: 'all', label: t.projects.filterAll },
+    { id: 'data', label: t.projects.filterData },
+    { id: 'dashboard', label: t.projects.filterDashboard },
+    { id: 'ml', label: t.projects.filterMl },
+  ];
+
+  const visible = projects.filter(
+    (project) => filter === 'all' || project.categories.includes(filter),
+  );
 
   return (
     <section className="scroll-mt-24">
-      <div className="text-center mb-10">
+      <div className="mb-8 text-center">
         <h2 className="section-title">{t.projects.title}</h2>
-        <div className="section-rule mx-auto mt-4"></div>
+        <div className="section-rule mx-auto mt-4" />
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8">
-        <div className="surface-card overflow-hidden hover:border-blue-400/40 transition group flex flex-col">
-          <div className="p-6 flex flex-col flex-grow">
-            <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-300 transition leading-snug">
-              End-to-End E-Commerce Customer & Sales Analytics
-            </h3>
-            <div className="flex flex-wrap gap-2 mb-5">
-              <span className={tagClass}>SQL Server</span>
-              <span className={tagClass}>Python</span>
-              <span className={tagClass}>Streamlit</span>
-            </div>
-            <ul className="text-white/70 text-sm mb-6 space-y-2.5 list-disc list-outside ml-4 flex-grow">
-              <li>{t.projects.p1b1}</li>
-              <li>{t.projects.p1b2}</li>
-              <li>{t.projects.p1b3}</li>
-            </ul>
-            <div className="flex items-center gap-5 mt-auto pt-4 border-t border-white/10">
-              <a href="https://github.com/LeThanhTin4081/SQL-ECommerce-Analytics-With-Machine-Learning" target="_blank" rel="noopener noreferrer" className={linkClass}>
-                <Github size={18} /> GitHub
-              </a>
-              <a href="https://ecommerce-annual-report-2018.streamlit.app/" target="_blank" rel="noopener noreferrer" className={linkClass}>
-                <ExternalLink size={18} /> Streamlit Dashboard
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className="surface-card overflow-hidden hover:border-blue-400/40 transition group flex flex-col">
-          <div className="p-6 flex flex-col flex-grow">
-            <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-300 transition leading-snug">
-              Ho Chi Minh City Housing Market Analysis 2021 – 2025
-            </h3>
-            <div className="flex flex-wrap gap-2 mb-5">
-              <span className={tagClass}>Python (Selenium, BeautifulSoup)</span>
-              <span className={tagClass}>Power BI</span>
-            </div>
-            <ul className="text-white/70 text-sm mb-6 space-y-2.5 list-disc list-outside ml-4 flex-grow">
-              <li>{t.projects.p2b1}</li>
-              <li>{t.projects.p2b2}</li>
-              <li>{t.projects.p2b3}</li>
-            </ul>
-            <div className="flex items-center gap-5 mt-auto pt-4 border-t border-white/10">
-              <a href="https://github.com/LeThanhTin4081/hochiminh-city-house-price-analysis" target="_blank" rel="noopener noreferrer" className={linkClass}>
-                <Github size={18} /> GitHub
-              </a>
-              <a href="https://app.powerbi.com/view?r=eyJrIjoiYTE3OWVkZWMtYzMzZi00N2IwLWE4MDMtOTdhNTQzNzM4YWQ4IiwidCI6ImVkOGYxNjczLTM4OTAtNGRiNC1hM2YwLTk3YWQ5NDI3Yzc0ZiIsImMiOjEwfQ%3D%3D" target="_blank" rel="noopener noreferrer" className={linkClass}>
-                <ExternalLink size={18} /> Power BI Dashboard
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className="surface-card overflow-hidden hover:border-blue-400/40 transition group flex flex-col">
-          <div className="p-6 flex flex-col flex-grow">
-            <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-300 transition leading-snug">
-              Essential Commodity Price Analysis in Vietnam 2005 - 2025
-            </h3>
-            <div className="flex flex-wrap gap-2 mb-5">
-              <span className={tagClass}>Excel (Power Query)</span>
-              <span className={tagClass}>Python</span>
-              <span className={tagClass}>Power BI</span>
-            </div>
-            <ul className="text-white/70 text-sm mb-6 space-y-2.5 list-disc list-outside ml-4 flex-grow">
-              <li>{t.projects.p3b1}</li>
-              <li>{t.projects.p3b2}</li>
-              <li>{t.projects.p3b3}</li>
-            </ul>
-            <div className="flex items-center gap-5 mt-auto pt-4 border-t border-white/10">
-              <a href="https://github.com/LeThanhTin4081/phan-tich-bien-dong-gia-ca-vietnam-2005-2025" target="_blank" rel="noopener noreferrer" className={linkClass}>
-                <Github size={18} /> GitHub
-              </a>
-              <a href="https://app.powerbi.com/view?r=eyJrIjoiMDJlNjAwZTEtNTVjOS00Njc3LWJlMTItNGYxM2FmZmM3YjhkIiwidCI6ImVkOGYxNjczLTM4OTAtNGRiNC1hM2YwLTk3YWQ5NDI3Yzc0ZiIsImMiOjEwfQ%3D%3D" target="_blank" rel="noopener noreferrer" className={linkClass}>
-                <ExternalLink size={18} /> Power BI Dashboard
-              </a>
-            </div>
-          </div>
-        </div>
+      <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
+        {filters.map((item) => {
+          const active = filter === item.id;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => setFilter(item.id)}
+              aria-pressed={active}
+              className={`rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-all outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 ${
+                active
+                  ? 'border-cyan-400/40 bg-cyan-500/15 text-cyan-200'
+                  : 'border-white/10 bg-white/5 text-white/55 hover:border-white/20 hover:text-white/85'
+              }`}
+            >
+              {item.label}
+            </button>
+          );
+        })}
       </div>
+
+      {visible.length === 0 ? (
+        <p className="py-10 text-center text-sm text-white/50">{t.projects.empty}</p>
+      ) : (
+        <div className="grid gap-8 lg:grid-cols-2">
+          {visible.map((project) => (
+            <article
+              key={project.id}
+              className="surface-card group flex flex-col overflow-hidden transition hover:border-blue-400/40"
+            >
+              <div
+                className={`relative h-36 overflow-hidden border-b border-white/10 bg-gradient-to-br ${project.accent} sm:h-40`}
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.12),transparent_45%)]" />
+                <div className="absolute bottom-4 left-4 right-4 flex items-end gap-1.5 opacity-70">
+                  {[42, 68, 55, 82, 48, 74, 60, 88].map((h, i) => (
+                    <span
+                      key={i}
+                      className="flex-1 rounded-t-sm bg-white/25 transition-all duration-500 group-hover:bg-white/40"
+                      style={{ height: `${h * 0.28}%`, minHeight: `${h * 0.35}px` }}
+                    />
+                  ))}
+                </div>
+                <div className="absolute right-3 top-3 rounded-md border border-white/15 bg-slate-950/55 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white/70 backdrop-blur-sm">
+                  {project.liveLabel}
+                </div>
+              </div>
+
+              <div className="flex flex-grow flex-col p-6">
+                <h3 className="mb-3 text-xl font-bold leading-snug text-white transition group-hover:text-cyan-300">
+                  {project.title}
+                </h3>
+                <div className="mb-5 flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span key={tag} className={tagClass}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <ul className="mb-6 ml-4 flex-grow list-outside list-disc space-y-2.5 text-sm text-white/70">
+                  {project.bullets.map((bullet) => (
+                    <li key={bullet.slice(0, 32)}>{bullet}</li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto flex flex-wrap items-center gap-3 border-t border-white/10 pt-4">
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/35 bg-cyan-500/15 px-3.5 py-2 text-sm font-bold text-cyan-200 transition hover:border-cyan-300/50 hover:bg-cyan-500/25"
+                  >
+                    <ExternalLink size={16} />
+                    {t.projects.live}
+                    <span className="text-cyan-200/60">· {project.liveLabel}</span>
+                  </a>
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3.5 py-2 text-sm font-bold text-white/70 transition hover:border-white/25 hover:text-white"
+                  >
+                    <Github size={16} />
+                    {t.projects.code}
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
     </section>
   );
 };
