@@ -32,6 +32,7 @@ function navLinkActiveClass(active: boolean, mobile = false) {
 
 function AppShell() {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionId>('hero');
   const { lang, setLang, t } = useLanguage();
@@ -74,6 +75,7 @@ function AppShell() {
       );
       const windowHeight = docHeight - window.innerHeight;
       setScrollProgress(windowHeight > 0 ? Math.min(1, totalScroll / windowHeight) : 0);
+      setScrolled(totalScroll > 24);
 
       // Activate a section once its top crosses ~40% down the viewport
       // (so Skills highlights while the section is on screen, not only when near the nav).
@@ -135,7 +137,13 @@ function AppShell() {
       />
 
       <div className="app-content">
-      <nav className="sticky top-0 z-50 bg-slate-950/85 backdrop-blur-sm border-b border-white/10">
+      <nav
+        className={`sticky top-0 z-50 transition-all duration-500 ${
+          scrolled || mobileOpen
+            ? 'bg-slate-950/80 backdrop-blur-md border-b border-white/10 shadow-lg shadow-black/20'
+            : 'bg-transparent border-b border-transparent backdrop-blur-none'
+        }`}
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-3">
           {/* Spacer — same visual weight as right controls so menu stays centered */}
           <div className="justify-self-start w-[5.25rem] md:w-[5.25rem]" aria-hidden />
@@ -225,7 +233,7 @@ function AppShell() {
         />
       )}
 
-      <div id="hero" className="scroll-mt-24"><Hero /></div>
+      <div id="hero" className="-mt-20 scroll-mt-24"><Hero /></div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-12">
         <div id="about" className="scroll-mt-24 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out"><About /></div>

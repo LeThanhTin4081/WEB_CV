@@ -80,7 +80,7 @@ body,
       radial-gradient(circle at 75% 60%, rgba(30, 58, 138, 0.18), rgba(30, 64, 175, 0.09) 20%, transparent 45%),
       radial-gradient(circle at 50% 25%, rgba(14, 165, 233, 0.12), rgba(6, 182, 212, 0.06) 30%, transparent 45%),
       radial-gradient(circle at 80% 30%, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.05) 25%, transparent 40%);
-    animation: waterGlow 18s ease-in-out infinite;
+    animation: waterGlow 100s ease-in-out infinite;
   }
 
   .retro-background {
@@ -224,30 +224,72 @@ body,
     0 0 2px rgba(2, 6, 23, 0.6);
 }
 
-/* Đổi màu nhẹ kiểu Terran — hue-rotate vừa phải + scale nhỏ */
+/* Đổi màu 5 sắc thái vũ trụ: Mỗi màu lưu lại ~20s với thời gian chuyển sắc kéo dài 9s cực kỳ từ từ, mượt mà
+   Xanh dương Sapphire → Tím chàm Indigo → Hồng tím Magenta → Xanh ngọc Cyan → Xanh lục ngọc bích Emerald */
 @keyframes waterGlow {
+  /* 1. Xanh dương Sapphire (Peak ~11s, sau đó chuyển dần sang Tím trong 9s) */
   0% {
-    opacity: 0.6;
+    opacity: 0.68;
     filter: hue-rotate(0deg) brightness(1.1);
     transform: translateZ(0) scale(1);
   }
-  25% {
-    opacity: 0.8;
-    filter: hue-rotate(45deg) brightness(1.2);
+  11% {
+    opacity: 0.72;
+    filter: hue-rotate(0deg) brightness(1.12);
+    transform: translateZ(0) scale(1.015);
+  }
+
+  /* 2. Tím chàm Indigo (Peak ~11s, sau đó chuyển dần sang Hồng tím trong 9s) */
+  20% {
+    opacity: 0.76;
+    filter: hue-rotate(35deg) brightness(1.18);
+    transform: translateZ(0) scale(1.025);
+  }
+  31% {
+    opacity: 0.80;
+    filter: hue-rotate(35deg) brightness(1.2);
     transform: translateZ(0) scale(1.03);
   }
-  50% {
-    opacity: 0.7;
-    filter: hue-rotate(-30deg) brightness(1.15);
-    transform: translateZ(0) scale(1.01);
+
+  /* 3. Hồng tím Magenta (Peak ~11s, sau đó chuyển dần sang Xanh ngọc trong 9s) */
+  40% {
+    opacity: 0.84;
+    filter: hue-rotate(68deg) brightness(1.22);
+    transform: translateZ(0) scale(1.035);
   }
-  75% {
-    opacity: 0.9;
-    filter: hue-rotate(60deg) brightness(1.25);
+  51% {
+    opacity: 0.86;
+    filter: hue-rotate(68deg) brightness(1.22);
     transform: translateZ(0) scale(1.04);
   }
+
+  /* 4. Xanh ngọc Cyan (Peak ~11s, sau đó chuyển dần sang Xanh lục ngọc bích trong 9s) */
+  60% {
+    opacity: 0.75;
+    filter: hue-rotate(-22deg) brightness(1.16);
+    transform: translateZ(0) scale(1.02);
+  }
+  71% {
+    opacity: 0.78;
+    filter: hue-rotate(-22deg) brightness(1.18);
+    transform: translateZ(0) scale(1.025);
+  }
+
+  /* 5. Xanh lục ngọc bích Emerald (Peak ~11s, sau đó chuyển dần về Xanh dương trong 9s) */
+  80% {
+    opacity: 0.80;
+    filter: hue-rotate(-50deg) brightness(1.15);
+    transform: translateZ(0) scale(1.03);
+  }
+  91% {
+    opacity: 0.83;
+    filter: hue-rotate(-50deg) brightness(1.17);
+    transform: translateZ(0) scale(1.035);
+  }
+
+  /* Trở về 1. Xanh dương Sapphire mượt mà hoàn tất chu kỳ 100s */
   100% {
-    opacity: 0.6;
+    opacity: 0.68;
     filter: hue-rotate(0deg) brightness(1.1);
     transform: translateZ(0) scale(1);
   }
@@ -360,75 +402,87 @@ body,
   }
 }
 
-/* Tiny star-like sparks — only radiate outward from the center glow */
+/* Hạt phát quang trôi chậm, tự nhiên, liên tục tỏa từ trung tâm ra ngoài không gian rộng hơn mà không bị dồn cục */
 .skills-spark-field {
   position: absolute;
-  inset: 0;
+  inset: -22% -18%;
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
-  -webkit-mask-image: radial-gradient(ellipse 92% 88% at 50% 48%, #000 18%, transparent 78%);
-  mask-image: radial-gradient(ellipse 92% 88% at 50% 48%, #000 18%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 98% 95% at 50% 50%, #000 45%, transparent 96%);
+  mask-image: radial-gradient(ellipse 98% 95% at 50% 50%, #000 45%, transparent 96%);
 }
 
 .skills-spark {
   position: absolute;
   left: 50%;
-  top: 48%;
-  width: var(--spark-size, 2px);
-  height: var(--spark-size, 2px);
-  margin: calc(var(--spark-size, 2px) / -2) 0 0 calc(var(--spark-size, 2px) / -2);
-  border-radius: 50%;
-  background: hsl(var(--spark-hue, 210) 70% 72% / 0.95);
-  box-shadow: 0 0 5px hsl(var(--spark-hue, 210) 90% 65% / 0.55);
-  animation: skills-spark-drift var(--spark-dur, 7s) linear infinite;
+  top: 50%;
+  width: var(--spark-size, 1.8px);
+  height: var(--spark-size, 1.8px);
+  margin: calc(var(--spark-size, 1.8px) / -2) 0 0 calc(var(--spark-size, 1.8px) / -2);
+  border-radius: 9999px;
+  pointer-events: none;
+  animation: skills-spark-drift var(--spark-dur, 8s) linear infinite;
   animation-delay: var(--spark-delay, 0s);
   will-change: transform, opacity;
 }
 
+/* Hạt nhỏ, sáng sắc nét tinh tế */
 .skills-spark--gray {
-  background: rgba(203, 213, 225, 0.9);
-  box-shadow: 0 0 4px rgba(148, 163, 184, 0.45);
+  background: #f1f5f9;
+  box-shadow: 0 0 3px rgba(241, 245, 249, 0.9);
 }
 
 .skills-spark--blue {
-  background: rgba(96, 165, 250, 0.95);
-  box-shadow: 0 0 6px rgba(59, 130, 246, 0.55);
+  background: #93c5fd;
+  box-shadow: 0 0 3.5px rgba(59, 130, 246, 0.85);
 }
 
 .skills-spark--red {
-  background: rgba(248, 113, 113, 0.92);
-  box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
+  background: #fca5a5;
+  box-shadow: 0 0 3.5px rgba(239, 68, 68, 0.85);
 }
 
 .skills-spark--orange {
-  background: rgba(251, 146, 60, 0.92);
-  box-shadow: 0 0 6px rgba(249, 115, 22, 0.5);
-}
-
-.skills-spark--white {
-  display: none;
+  background: #fdba74;
+  box-shadow: 0 0 3.5px rgba(249, 115, 22, 0.85);
 }
 
 .skills-spark--purple {
-  background: rgba(192, 132, 252, 0.92);
-  box-shadow: 0 0 6px rgba(168, 85, 247, 0.5);
+  background: #d8b4fe;
+  box-shadow: 0 0 3.5px rgba(168, 85, 247, 0.85);
 }
 
+.skills-spark--cyan {
+  background: #67e8f9;
+  box-shadow: 0 0 3.5px rgba(34, 211, 238, 0.85);
+}
+
+/* Trôi đều từ tâm ra ngoài: sinh ra nhẹ nhàng, sáng đều giữa đường, mờ dần và biến mất tự nhiên trước khi tới biên, không bị dồn cục */
 @keyframes skills-spark-drift {
   0% {
     opacity: 0;
-    transform: rotate(var(--spark-angle)) translateY(1.4rem) scale(0.4);
+    transform: rotate(var(--spark-angle)) translateY(0px) scale(0.35);
   }
-  12% {
-    opacity: 1;
+  14% {
+    opacity: 0.85;
+    transform: rotate(var(--spark-angle)) translateY(calc(var(--spark-dist, 16rem) * 0.14)) scale(0.9);
+  }
+  45% {
+    opacity: 0.75;
+    transform: rotate(var(--spark-angle)) translateY(calc(var(--spark-dist, 16rem) * 0.45)) scale(1);
   }
   70% {
-    opacity: 0.75;
+    opacity: 0.45;
+    transform: rotate(var(--spark-angle)) translateY(calc(var(--spark-dist, 16rem) * 0.70)) scale(0.9);
+  }
+  88% {
+    opacity: 0.12;
+    transform: rotate(var(--spark-angle)) translateY(calc(var(--spark-dist, 16rem) * 0.88)) scale(0.75);
   }
   100% {
     opacity: 0;
-    transform: rotate(var(--spark-angle)) translateY(var(--spark-dist, 14rem)) scale(1.15);
+    transform: rotate(var(--spark-angle)) translateY(var(--spark-dist, 16rem)) scale(0.6);
   }
 }
 

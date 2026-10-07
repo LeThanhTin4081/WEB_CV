@@ -6,7 +6,7 @@ const Hero = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="relative text-white py-24 sm:py-32 overflow-hidden flex flex-col justify-center min-h-[600px]">
+    <section className="relative text-white pt-32 pb-24 sm:pt-40 sm:pb-32 overflow-hidden flex flex-col justify-center min-h-[640px] sm:min-h-[700px]">
       <HeroScene />
       <div className="hero-enter max-w-4xl mx-auto text-center px-4 relative z-10">
         <h1 className="hero-title text-5xl font-bold tracking-tight sm:text-6xl mb-4">

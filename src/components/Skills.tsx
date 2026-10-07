@@ -277,7 +277,7 @@ function useSkillsPerf() {
   return { tier, inView, sceneRef };
 }
 
-const SPARK_TONES = ['gray', 'blue', 'red', 'orange', 'purple'] as const;
+const SPARK_TONES = ['cyan', 'orange', 'blue', 'purple', 'gray', 'red'] as const;
 
 function SparkField({ count }: { count: number }) {
   if (count <= 0) return null;
@@ -285,19 +285,23 @@ function SparkField({ count }: { count: number }) {
     <div className="skills-spark-field" aria-hidden>
       {Array.from({ length: count }, (_, i) => {
         const tone = SPARK_TONES[i % SPARK_TONES.length];
-        // Travel across the scene (not off into clipped void). Mix near + far rings.
-        const ring = 0.55 + (i % 5) * 0.12;
+        const ring = 0.82 + (i % 6) * 0.14;
+        const dist = (15.5 + (i % 7) * 2.8) * ring;
+        const dur = 7.8 + (i % 5) * 0.6;
+        const delay = -((i / count) * dur);
+        const angle = (i * 137.508) % 360;
+        const size = 1.5 + (i % 4) * 0.28;
         return (
           <span
             key={i}
             className={`skills-spark skills-spark--${tone}`}
             style={
               {
-                '--spark-angle': `${(i / count) * 360 + (i % 7) * 7}deg`,
-                '--spark-delay': `${(i % 14) * 0.35}s`,
-                '--spark-dur': `${5.2 + (i % 7) * 0.7}s`,
-                '--spark-size': `${1.6 + (i % 5) * 0.7}px`,
-                '--spark-dist': `${(14 + (i % 8) * 2.2) * ring}rem`,
+                '--spark-angle': `${angle.toFixed(1)}deg`,
+                '--spark-delay': `${delay.toFixed(2)}s`,
+                '--spark-dur': `${dur.toFixed(1)}s`,
+                '--spark-size': `${size.toFixed(1)}px`,
+                '--spark-dist': `${dist.toFixed(1)}rem`,
               } as CSSProperties
             }
           />
@@ -371,7 +375,7 @@ const Skills = () => {
   const { t } = useLanguage();
   const { tier, inView, sceneRef } = useSkillsPerf();
   const motionEnabled = tier !== 'off' && inView;
-  const sparkCount = tier === 'full' ? 56 : tier === 'lite' ? 28 : 0;
+  const sparkCount = tier === 'full' ? 40 : tier === 'lite' ? 20 : 0;
 
   const { outerSteps, innerSteps, activeLayer, isMoving } = useTriangleMotion(motionEnabled);
 
