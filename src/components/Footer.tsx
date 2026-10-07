@@ -53,7 +53,7 @@ const Footer = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-white/10">
         <div className="flex justify-center">
           <div className="text-sm text-white/50 bg-slate-900/50 px-5 py-2 rounded-full border border-white/10 hover:border-white/20 transition cursor-default">
-            © 2025 Tin Le Thanh. All rights reserved.
+            © 2025 {t.name}. {t.footer.rights}
           </div>
         </div>
       </div>

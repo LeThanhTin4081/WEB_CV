@@ -373,7 +373,7 @@ const translations = {
         '热衷于将 AI 与数据科学最新研究成果应用于解决实际业务问题的 Data Science 专业人士。持续追求在数据科学领域的深耕与突破。',
       quickLinks: '快速链接',
       connect: '社交连接',
-      rights: 'All rights reserved.',
+      rights: '保留所有权利。',
     },
   },
 } as const;
