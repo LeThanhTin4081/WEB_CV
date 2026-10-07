@@ -348,7 +348,7 @@ const translations = {
         '如果您对商业合作、Data Science 项目感兴趣，或正在寻找一位优秀的人才，欢迎随时与我联系。信息将直达我的个人邮箱，我会尽快回复您。',
       phone: '电话',
       locationLabel: '工作地点',
-      locationValue: '胡志明市',
+      locationValue: 'Ho Chi Minh City',
       nameLabel: '姓名',
       namePlaceholder: '请输入您的姓名',
       nameError: '请输入您的姓名',
