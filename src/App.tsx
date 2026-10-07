@@ -108,12 +108,12 @@ function AppShell() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('opacity-100', 'translate-y-0');
+            entry.target.classList.add('opacity-100', 'translate-y-0', 'is-visible');
             entry.target.classList.remove('opacity-0', 'translate-y-12');
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
     );
 
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
@@ -136,23 +136,26 @@ function AppShell() {
 
       <div className="app-content">
       <nav className="sticky top-0 z-50 bg-slate-950/85 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-end gap-3">
-          <div className="flex items-center gap-1 sm:gap-2">
-            <div className="hidden md:flex items-center gap-1">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className={navLinkActiveClass(activeSection === item.id)}
-                  aria-current={activeSection === item.id ? 'true' : undefined}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-3">
+          {/* Spacer — same visual weight as right controls so menu stays centered */}
+          <div className="justify-self-start w-[5.25rem] md:w-[5.25rem]" aria-hidden />
 
+          <div className="hidden md:flex items-center justify-center gap-1">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className={navLinkActiveClass(activeSection === item.id)}
+                aria-current={activeSection === item.id ? 'true' : undefined}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+
+          <div className="flex items-center justify-end justify-self-end gap-2">
             <div
-              className="ml-1 flex items-center gap-0.5 rounded-full bg-white/5 border border-white/10 p-0.5"
+              className="grid grid-cols-2 gap-0.5 rounded-full bg-white/5 border border-white/10 p-0.5 w-[5.25rem] shrink-0"
               role="group"
               aria-label="Language"
             >
@@ -160,7 +163,7 @@ function AppShell() {
                 type="button"
                 onClick={() => setLang('vi')}
                 aria-pressed={lang === 'vi'}
-                className={`px-2.5 py-1 rounded-full text-xs font-bold tracking-wide transition-all outline-none focus:outline-none ${
+                className={`inline-flex h-8 w-full items-center justify-center rounded-full text-xs font-bold tracking-wide transition-all outline-none focus:outline-none ${
                   lang === 'vi' ? 'bg-white/15 text-cyan-300' : 'text-white/40 hover:text-white/70'
                 }`}
               >
@@ -170,7 +173,7 @@ function AppShell() {
                 type="button"
                 onClick={() => setLang('en')}
                 aria-pressed={lang === 'en'}
-                className={`px-2.5 py-1 rounded-full text-xs font-bold tracking-wide transition-all outline-none focus:outline-none ${
+                className={`inline-flex h-8 w-full items-center justify-center rounded-full text-xs font-bold tracking-wide transition-all outline-none focus:outline-none ${
                   lang === 'en' ? 'bg-white/15 text-cyan-300' : 'text-white/40 hover:text-white/70'
                 }`}
               >
@@ -180,7 +183,7 @@ function AppShell() {
 
             <button
               type="button"
-              className="md:hidden ml-1 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 hover:bg-white/10 hover:text-white transition-colors outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50"
+              className="md:hidden inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 hover:bg-white/10 hover:text-white transition-colors outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50"
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav-panel"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}

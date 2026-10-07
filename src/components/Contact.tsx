@@ -55,7 +55,7 @@ const Contact = () => {
   const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validate()) return;
+    if (!validate() || !form.current) return;
 
     setLoading(true);
 
@@ -63,8 +63,6 @@ const Contact = () => {
     const templateContact = import.meta.env.VITE_EMAILJS_TEMPLATE_CONTACT;
     const templateReply = import.meta.env.VITE_EMAILJS_TEMPLATE_REPLY;
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-    if (!form.current) return;
 
     try {
       await Promise.all([
@@ -75,7 +73,8 @@ const Contact = () => {
       form.current.reset();
     } catch (error: any) {
       console.error(error);
-      alert(t.contact.sendError + error.text);
+      const msg = error?.text || error?.message || (typeof error === 'string' ? error : 'Check console for details');
+      alert(t.contact.sendError + msg);
     } finally {
       setLoading(false);
     }
@@ -84,7 +83,10 @@ const Contact = () => {
   return (
     <section className="scroll-mt-24">
       <div className="surface-card overflow-hidden grid md:grid-cols-2 max-w-5xl mx-auto">
-        <div className="p-8 bg-gradient-to-br from-blue-600/30 to-cyan-700/20 border-b md:border-b-0 md:border-r border-white/10">
+        <div
+          className="reveal-child p-8 bg-gradient-to-br from-blue-600/30 to-cyan-700/20 border-b md:border-b-0 md:border-r border-white/10"
+          style={{ ['--d' as string]: 0 }}
+        >
           <h2 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2 text-center">
             {t.contact.title} <span className="animate-pulse">👋</span>
           </h2>
@@ -141,7 +143,7 @@ const Contact = () => {
           </div>
         </div>
 
-        <div className="p-8 relative bg-slate-950/40">
+        <div className="reveal-child p-8 relative bg-slate-950/40" style={{ ['--d' as string]: 1 }}>
           <form ref={form} onSubmit={sendEmail} className="space-y-3">
             <div>
               <label className="block text-xs font-bold text-white/50 mb-1">{t.contact.nameLabel}</label>

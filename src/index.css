@@ -147,6 +147,83 @@ body,
   }
 }
 
+/* Scroll reveal: section fades in, children stagger shortly after */
+.reveal-child {
+  opacity: 0;
+  transform: translateY(1rem);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease;
+  transition-delay: calc(var(--d, 0) * 75ms);
+}
+
+.reveal.is-visible .reveal-child,
+.reveal.opacity-100 .reveal-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero enter once on load */
+.hero-enter > * {
+  opacity: 0;
+  transform: translateY(0.85rem);
+  animation: hero-enter 0.7s ease forwards;
+}
+
+.hero-enter > *:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.hero-enter > *:nth-child(2) {
+  animation-delay: 0.14s;
+}
+.hero-enter > *:nth-child(3) {
+  animation-delay: 0.24s;
+}
+.hero-enter > *:nth-child(4) {
+  animation-delay: 0.36s;
+}
+
+@keyframes hero-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-child {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero-enter > * {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* ===== Hero 3D canvas (see components/HeroScene.tsx) ===== */
+.hero-canvas {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  /* Fade the wave grid out before the hero ends so it blends into About */
+  -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent);
+  mask-image: linear-gradient(to bottom, #000 78%, transparent);
+}
+
+/* Keep the title crisp over the glowing ring */
+.hero-title {
+  text-shadow:
+    0 2px 28px rgba(2, 6, 23, 0.85),
+    0 0 2px rgba(2, 6, 23, 0.6);
+}
+
 /* Đổi màu nhẹ kiểu Terran — hue-rotate vừa phải + scale nhỏ */
 @keyframes waterGlow {
   0% {
@@ -224,8 +301,8 @@ body,
 .skills-triangle-scene {
   position: relative;
   width: 100%;
-  min-height: clamp(24rem, 64vw, 32rem);
-  padding: 0.5rem 0.75rem 1.5rem;
+  min-height: clamp(26rem, 68vw, 34rem);
+  padding: 1.5rem 0.75rem 2rem;
   overflow: hidden;
 }
 
@@ -233,38 +310,26 @@ body,
   position: absolute;
   left: 50%;
   top: 52%;
-  width: min(70%, 20rem);
-  height: min(55%, 14rem);
+  width: min(62%, 17rem);
+  height: min(48%, 12rem);
   transform: translate(-50%, -50%) scale(1);
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(251, 146, 60, 0.32) 0%,
-    rgba(234, 88, 12, 0.14) 35%,
-    rgba(59, 130, 246, 0.06) 55%,
-    transparent 75%
+    rgba(251, 146, 60, 0.22) 0%,
+    rgba(234, 88, 12, 0.1) 38%,
+    rgba(59, 130, 246, 0.05) 58%,
+    transparent 76%
   );
   pointer-events: none;
-  filter: blur(22px);
+  filter: blur(26px);
   transform-origin: center center;
   animation: skills-glow-bloom 5.5s ease-in-out infinite;
   will-change: transform, opacity, filter;
 }
 
 .skills-triangle-glow--core {
-  width: min(38%, 10rem);
-  height: min(28%, 7rem);
-  top: 48%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 200, 120, 0.4) 0%,
-    rgba(251, 146, 60, 0.18) 40%,
-    transparent 70%
-  );
-  filter: blur(14px);
-  opacity: 0.85;
-  animation: skills-glow-bloom-core 5.5s ease-in-out infinite;
-  animation-delay: -1.2s;
+  display: none;
 }
 
 @keyframes skills-glow-bloom {
@@ -298,19 +363,18 @@ body,
 /* Tiny star-like sparks — only radiate outward from the center glow */
 .skills-spark-field {
   position: absolute;
-  left: 50%;
-  top: 48%;
-  width: 0;
-  height: 0;
+  inset: 0;
   pointer-events: none;
   z-index: 1;
-  overflow: visible;
+  overflow: hidden;
+  -webkit-mask-image: radial-gradient(ellipse 92% 88% at 50% 48%, #000 18%, transparent 78%);
+  mask-image: radial-gradient(ellipse 92% 88% at 50% 48%, #000 18%, transparent 78%);
 }
 
 .skills-spark {
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 50%;
+  top: 48%;
   width: var(--spark-size, 2px);
   height: var(--spark-size, 2px);
   margin: calc(var(--spark-size, 2px) / -2) 0 0 calc(var(--spark-size, 2px) / -2);
@@ -343,8 +407,7 @@ body,
 }
 
 .skills-spark--white {
-  background: rgba(248, 250, 252, 0.95);
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.45);
+  display: none;
 }
 
 .skills-spark--purple {
@@ -355,17 +418,17 @@ body,
 @keyframes skills-spark-drift {
   0% {
     opacity: 0;
-    transform: rotate(var(--spark-angle)) translateY(0.4rem) scale(0.35);
+    transform: rotate(var(--spark-angle)) translateY(1.4rem) scale(0.4);
   }
-  8% {
-    opacity: 0.95;
+  12% {
+    opacity: 1;
   }
-  55% {
-    opacity: 0.7;
+  70% {
+    opacity: 0.75;
   }
   100% {
     opacity: 0;
-    transform: rotate(var(--spark-angle)) translateY(var(--spark-dist, 11rem)) scale(1.05);
+    transform: rotate(var(--spark-angle)) translateY(var(--spark-dist, 14rem)) scale(1.15);
   }
 }
 

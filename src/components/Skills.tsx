@@ -277,7 +277,7 @@ function useSkillsPerf() {
   return { tier, inView, sceneRef };
 }
 
-const SPARK_TONES = ['gray', 'blue', 'red', 'orange', 'white', 'purple'] as const;
+const SPARK_TONES = ['gray', 'blue', 'red', 'orange', 'purple'] as const;
 
 function SparkField({ count }: { count: number }) {
   if (count <= 0) return null;
@@ -285,17 +285,19 @@ function SparkField({ count }: { count: number }) {
     <div className="skills-spark-field" aria-hidden>
       {Array.from({ length: count }, (_, i) => {
         const tone = SPARK_TONES[i % SPARK_TONES.length];
+        // Travel across the scene (not off into clipped void). Mix near + far rings.
+        const ring = 0.55 + (i % 5) * 0.12;
         return (
           <span
             key={i}
             className={`skills-spark skills-spark--${tone}`}
             style={
               {
-                '--spark-angle': `${(i / count) * 360 + (i % 7) * 9}deg`,
-                '--spark-delay': `${(i % 12) * 0.55}s`,
-                '--spark-dur': `${6.5 + (i % 8) * 0.9}s`,
-                '--spark-size': `${1.2 + (i % 5) * 0.55}px`,
-                '--spark-dist': `${39 + (i % 6) * 6.3}rem`,
+                '--spark-angle': `${(i / count) * 360 + (i % 7) * 7}deg`,
+                '--spark-delay': `${(i % 14) * 0.35}s`,
+                '--spark-dur': `${5.2 + (i % 7) * 0.7}s`,
+                '--spark-size': `${1.6 + (i % 5) * 0.7}px`,
+                '--spark-dist': `${(14 + (i % 8) * 2.2) * ring}rem`,
               } as CSSProperties
             }
           />
@@ -369,7 +371,7 @@ const Skills = () => {
   const { t } = useLanguage();
   const { tier, inView, sceneRef } = useSkillsPerf();
   const motionEnabled = tier !== 'off' && inView;
-  const sparkCount = tier === 'full' ? 28 : tier === 'lite' ? 12 : 0;
+  const sparkCount = tier === 'full' ? 56 : tier === 'lite' ? 28 : 0;
 
   const { outerSteps, innerSteps, activeLayer, isMoving } = useTriangleMotion(motionEnabled);
 
@@ -399,7 +401,6 @@ const Skills = () => {
           className={`skills-triangle-scene mx-auto max-w-3xl pb-10 ${tier === 'lite' ? 'skills-perf-lite' : ''} ${inView ? '' : 'skills-scene--paused'}`}
         >
           <div className="skills-triangle-glow" aria-hidden />
-          <div className="skills-triangle-glow skills-triangle-glow--core" aria-hidden />
           <SparkField count={sparkCount} />
 
           {outerSkills.map((skill, index) => {

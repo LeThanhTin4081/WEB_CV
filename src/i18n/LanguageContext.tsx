@@ -59,6 +59,7 @@ const translations = {
       months: '6 months',
       roleType: 'Data Analyst Intern',
       onsite: 'On-site',
+      highlights: 'Highlights',
       b1: 'Supported the development and operation of data collection workflows across Facebook, TikTok, and Threads, along with daily data quality checks.',
       b2: 'Contributed to monitoring and alert workflows, including a Telegram Bot for negative sentiment and content alerts.',
       b3: 'Developed a Chrome Extension for sentiment labeling and researched the use of Qwen2.5-7B on RunPod for sentiment classification.',
@@ -181,6 +182,7 @@ const translations = {
       months: '6 tháng',
       roleType: 'Thực tập sinh Data Analyst',
       onsite: 'Tại văn phòng',
+      highlights: 'Điểm nổi bật',
       b1: 'Hỗ trợ phát triển và vận hành quy trình thu thập dữ liệu trên Facebook, TikTok và Threads, kèm kiểm tra chất lượng dữ liệu hàng ngày.',
       b2: 'Tham gia xây dựng quy trình giám sát và cảnh báo, bao gồm Telegram Bot cho cảnh báo sentiment tiêu cực và nội dung.',
       b3: 'Phát triển Chrome Extension hỗ trợ gắn nhãn sentiment và nghiên cứu mô hình Qwen2.5-7B trên RunPod cho phân loại sentiment.',
@@ -258,14 +260,35 @@ const translations = {
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
+const STORAGE_KEY = 'portfolio_lang';
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>('en');
+  const [lang, setLangState] = useState<Lang>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved === 'vi' || saved === 'en') return saved;
+      } catch {
+        // bỏ qua nếu bị chặn cookie/storage
+      }
+    }
+    return 'en';
+  });
+
+  const setLang = (nextLang: Lang) => {
+    setLangState(nextLang);
+    try {
+      localStorage.setItem(STORAGE_KEY, nextLang);
+    } catch {
+      // bỏ qua lỗi private mode/quota
+    }
+  };
 
   const value = useMemo<LanguageContextValue>(
     () => ({
       lang,
       setLang,
-      toggleLang: () => setLang((prev) => (prev === 'en' ? 'vi' : 'en')),
+      toggleLang: () => setLang(lang === 'en' ? 'vi' : 'en'),
       t: translations[lang],
     }),
     [lang]

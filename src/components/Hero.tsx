@@ -1,4 +1,5 @@
 import { MailGlyph, PhoneGlyph, LinkedinGlyph, GithubGlyph, OrcidGlyph } from './BrandIcons';
+import HeroScene from './HeroScene';
 import { useLanguage } from '../i18n/LanguageContext';
 
 const Hero = () => {
@@ -6,8 +7,9 @@ const Hero = () => {
 
   return (
     <section className="relative text-white py-24 sm:py-32 overflow-hidden flex flex-col justify-center min-h-[600px]">
-      <div className="max-w-4xl mx-auto text-center px-4 relative z-10">
-        <h1 className="text-5xl font-bold tracking-tight sm:text-6xl mb-4">
+      <HeroScene />
+      <div className="hero-enter max-w-4xl mx-auto text-center px-4 relative z-10">
+        <h1 className="hero-title text-5xl font-bold tracking-tight sm:text-6xl mb-4">
           {t.nameUpper}
         </h1>
         <div className="flex items-center justify-center gap-3 mb-10">
