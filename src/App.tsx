@@ -195,7 +195,7 @@ function AppShell() {
                   lang === 'zh' ? 'bg-white/15 text-cyan-300' : 'text-white/40 hover:text-white/70'
                 }`}
               >
-                ZH
+                CN
               </button>
             </div>
 
