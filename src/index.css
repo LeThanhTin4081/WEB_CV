@@ -30,7 +30,7 @@
 @font-face {
   font-family: 'Be Vietnam Pro';
   src: url('/fonts/BeVietnamPro-Bold.ttf') format('truetype');
-  font-weight: 700;
+  font-weight: 700 800;
   font-style: normal;
   font-display: swap;
 }
@@ -105,25 +105,26 @@ body,
   }
 
   .chip-glass {
-    @apply inline-flex items-center gap-2.5 bg-white/5 border border-white/15 rounded-full pl-1.5 pr-3.5 py-1.5 text-white/90 hover:bg-white/10 hover:border-white/25 transition-colors duration-300 font-medium;
+    @apply inline-flex items-center gap-2.5 bg-white/5 border border-white/15 rounded-full pl-1.5 pr-3.5 py-1.5 text-white/90 hover:bg-white/15 hover:border-cyan-400/60 hover:text-white hover:shadow-[0_0_20px_rgba(34,211,238,0.35)] hover:-translate-y-0.5 transition-all duration-300 font-medium;
   }
 
-  /* Terran-style: solid white circle, crisp CDN glyphs */
-  .chip-icon,
-  .icon-circle {
-    @apply inline-flex shrink-0 items-center justify-center rounded-full bg-white text-slate-900 border border-white/30;
-  }
-
+  /* Format cũ: hình tròn nền trắng sáng, icon rõ nét không bị tối */
   .chip-icon {
-    @apply h-8 w-8;
+    @apply inline-flex shrink-0 items-center justify-center rounded-full bg-white text-slate-900 border border-white/30 h-8 w-8 transition-all duration-300;
+  }
+
+  /* Khi rê chuột: phát sáng rực rỡ với ánh cyan neon */
+  .chip-glass:hover .chip-icon {
+    @apply bg-white text-slate-950 border-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.85),0_0_4px_rgba(255,255,255,1)] scale-105;
   }
 
   .chip-icon img {
     @apply h-[15px] w-[15px];
   }
 
+  /* Terran-style: solid white circle for contact cards/footer */
   .icon-circle {
-    @apply h-10 w-10 hover:bg-white/90 transition-all duration-300;
+    @apply inline-flex shrink-0 items-center justify-center rounded-full bg-white text-slate-900 border border-white/30 h-10 w-10 hover:bg-white/90 transition-all duration-300;
   }
 
   .icon-circle img {
@@ -131,11 +132,11 @@ body,
   }
 
   .btn-accent {
-    @apply inline-block bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold px-10 py-3.5 rounded-full shadow-lg shadow-blue-500/20 transition-all;
+    @apply inline-block bg-gradient-to-r from-blue-600 via-cyan-600 to-cyan-500 hover:from-blue-500 hover:via-cyan-500 hover:to-cyan-400 text-white font-bold px-10 py-3.5 rounded-full shadow-lg shadow-cyan-500/25 hover:shadow-[0_0_28px_rgba(34,211,238,0.5)] transition-all duration-300;
   }
 
   .btn-ghost {
-    @apply inline-block border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 text-white/85 hover:text-white font-bold px-10 py-3.5 rounded-full transition-all;
+    @apply inline-block border border-white/20 bg-slate-900/60 backdrop-blur-md hover:bg-white/10 hover:border-cyan-400/40 text-white/90 hover:text-white font-bold px-10 py-3.5 rounded-full hover:shadow-[0_0_18px_rgba(34,211,238,0.2)] transition-all duration-300;
   }
 
   .section-title {
@@ -217,11 +218,59 @@ body,
   mask-image: linear-gradient(to bottom, #000 78%, transparent);
 }
 
-/* Keep the title crisp over the glowing ring */
+/* Hero name title:
+   - Thêm padding phía trên để dấu nón tiếng Việt (Ê) không bao giờ bị cắt chóp bởi background-clip: text.
+   - Chu kỳ 20s, dải sáng xanh cyan lướt qua từ từ, êm dịu và chậm rãi.
+*/
 .hero-title {
-  text-shadow:
-    0 2px 28px rgba(2, 6, 23, 0.85),
-    0 0 2px rgba(2, 6, 23, 0.6);
+  display: inline-block;
+  opacity: 1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  padding-top: 0.24em;
+  padding-bottom: 0.08em;
+  line-height: 1.15;
+  background: linear-gradient(
+    110deg,
+    #ffffff 0%,
+    #ffffff 36%,
+    #38bdf8 45%,
+    #22d3ee 50%,
+    #a5f3fc 55%,
+    #ffffff 64%,
+    #ffffff 100%
+  );
+  background-size: 260% 100%;
+  background-position: 115% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: hero-title-sweep 20s ease-in-out infinite;
+  filter: drop-shadow(0 4px 18px rgba(2, 6, 23, 0.95))
+          drop-shadow(0 0 25px rgba(34, 211, 238, 0.28));
+  will-change: background-position, filter;
+}
+
+@keyframes hero-title-sweep {
+  0%, 72% {
+    background-position: 115% 0;
+    filter: drop-shadow(0 4px 18px rgba(2, 6, 23, 0.95))
+            drop-shadow(0 0 22px rgba(34, 211, 238, 0.25));
+  }
+  83% {
+    filter: drop-shadow(0 4px 18px rgba(2, 6, 23, 0.95))
+            drop-shadow(0 0 45px rgba(34, 211, 238, 0.85));
+  }
+  95% {
+    background-position: -20% 0;
+    filter: drop-shadow(0 4px 18px rgba(2, 6, 23, 0.95))
+            drop-shadow(0 0 22px rgba(34, 211, 238, 0.25));
+  }
+  95.01%, 100% {
+    background-position: 115% 0;
+    filter: drop-shadow(0 4px 18px rgba(2, 6, 23, 0.95))
+            drop-shadow(0 0 22px rgba(34, 211, 238, 0.25));
+  }
 }
 
 /* Đổi màu 5 sắc thái vũ trụ: Mỗi màu lưu lại ~20s với thời gian chuyển sắc kéo dài 9s cực kỳ từ từ, mượt mà
@@ -422,7 +471,7 @@ body,
   margin: calc(var(--spark-size, 1.8px) / -2) 0 0 calc(var(--spark-size, 1.8px) / -2);
   border-radius: 9999px;
   pointer-events: none;
-  animation: skills-spark-drift var(--spark-dur, 8s) linear infinite;
+  animation: skills-spark-drift var(--spark-dur, 12s) linear infinite;
   animation-delay: var(--spark-delay, 0s);
   will-change: transform, opacity;
 }

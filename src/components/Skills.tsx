@@ -287,7 +287,7 @@ function SparkField({ count }: { count: number }) {
         const tone = SPARK_TONES[i % SPARK_TONES.length];
         const ring = 0.82 + (i % 6) * 0.14;
         const dist = (15.5 + (i % 7) * 2.8) * ring;
-        const dur = 7.8 + (i % 5) * 0.6;
+        const dur = 11.2 + (i % 5) * 0.9;
         const delay = -((i / count) * dur);
         const angle = (i * 137.508) % 360;
         const size = 1.5 + (i % 4) * 0.28;

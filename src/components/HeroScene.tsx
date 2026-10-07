@@ -63,14 +63,14 @@ type Track = {
   speed: number;
   dir: 1 | -1;
   tint: RGB;
-  stars: { a0: number; sp: number; c: number; size: number }[];
+  stars: { a0: number; sp: number; c: number; size: number; scale: number }[];
 };
 
 const TRACK_DEFS = [
-  { k: 1.25, tilt: 1.3, roll: -0.55, speed: 0.42, dir: 1 as const, tint: AMBER },
-  { k: 1.6, tilt: 1.2, roll: 0.5, speed: 0.28, dir: -1 as const, tint: CYAN },
-  { k: 1.95, tilt: 1.38, roll: -0.12, speed: 0.2, dir: 1 as const, tint: SKY },
-  { k: 2.3, tilt: 1.12, roll: 0.24, speed: 0.14, dir: -1 as const, tint: AMBER },
+  { k: 1.25, tilt: 1.3, roll: -0.55, speed: 0.1, dir: 1 as const, tint: AMBER },
+  { k: 1.6, tilt: 1.2, roll: 0.5, speed: 0.08, dir: -1 as const, tint: CYAN },
+  { k: 1.95, tilt: 1.38, roll: -0.12, speed: 0.065, dir: 1 as const, tint: SKY },
+  { k: 2.3, tilt: 1.12, roll: 0.24, speed: 0.05, dir: -1 as const, tint: AMBER },
 ];
 
 const TORUS_BUCKETS = 5;
@@ -127,9 +127,10 @@ const HeroScene = () => {
       tint: d.tint,
       stars: Array.from({ length: cfg.perTrack }, (_, i) => ({
         a0: (i / cfg.perTrack) * TAU + rand() * 0.5,
-        sp: 0.75 + rand() * 0.6,
+        sp: 0.75 + rand() * 0.35,
         c: (i * 2 + ti) % PALETTE.length,
         size: 0.8 + rand() * 0.9,
+        scale: 1.0,
       })),
     }));
 
@@ -208,6 +209,74 @@ const HeroScene = () => {
       tp.s = s;
     };
 
+    // ---- Orbit Collision Fragmentation & Cosmic Dust Drift ----
+    type Debris = {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      c: number;
+      size: number;
+      age: number;
+      maxAge: number;
+      seed: number;
+    };
+
+    const debris: Debris[] = [];
+    const cooldowns = new Map<string, number>();
+    let lastCollisionT = 0;
+
+    const triggerShatter = (x: number, y: number, colA: number, colB: number) => {
+      // Khi va chạm: không làm hiệu ứng vùm/bùm chíu, mà hạt to tách vỡ thành các hạt li ti bay tự do
+      const count = lite ? 4 : 7;
+      for (let k = 0; k < count; k++) {
+        const ang = (k / count) * TAU + (Math.random() - 0.5) * 0.9;
+        const spd = 0.18 + Math.random() * 0.45;
+        debris.push({
+          x,
+          y,
+          vx: Math.cos(ang) * spd,
+          vy: Math.sin(ang) * spd,
+          c: Math.random() > 0.5 ? colA : colB,
+          size: 1.1 + Math.random() * 0.7,
+          age: 0,
+          maxAge: 4.8 + Math.random() * 2.2, // 4.8s - 7.0s trôi tự do thong thả
+          seed: Math.random() * 10,
+        });
+      }
+
+      if (debris.length > 70) debris.splice(0, debris.length - 70);
+    };
+
+    const updateAndDrawDebris = (dt: number) => {
+      for (let i = debris.length - 1; i >= 0; i--) {
+        const p = debris[i];
+        p.age += dt;
+        if (p.age >= p.maxAge) {
+          debris.splice(i, 1);
+          continue;
+        }
+
+        // 1. Trôi tự do trong không gian với lực cản cực kỳ êm
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx *= 0.988;
+        p.vy *= 0.988;
+
+        // 2. Dao động vũ trụ nhẹ nhàng
+        p.x += Math.sin(p.age * 0.9 + p.seed) * 0.08;
+        p.y += Math.cos(p.age * 0.9 + p.seed) * 0.08;
+
+        // 3. Từ từ tan mờ dần và bị hút vào không gian một cách chậm rãi
+        const life = p.age / p.maxAge;
+        const alpha = (1 - life) * 0.82;
+        const col = PALETTE[p.c];
+        ctx.fillStyle = rgba(col, alpha);
+        const sz = p.size * (1 - life * 0.25);
+        ctx.fillRect(p.x - sz / 2, p.y - sz / 2, sz, sz);
+      }
+    };
+
     const drawTrackLines = (back: boolean, cg: number, sg: number, cpi: number, spi: number) => {
       ctx.lineWidth = 0.8;
       for (const tr of tracks) {
@@ -241,19 +310,22 @@ const HeroScene = () => {
           const hy = tp.y;
           const hs = tp.s;
           const spr = sprites[st.c];
-          const base = baseSize * st.size;
+
+          // Khi va chạm, hạt to vỡ thành hạt nhỏ: st.scale thu nhỏ tức thì và hồi phục dần
+          const currentScale = st.scale;
+          const base = baseSize * st.size * currentScale;
 
           // Comet tail behind the head
           for (let k = cfg.trail; k >= 1; k--) {
             trackPoint(tr, theta - tr.dir * k * 0.035, cg, sg, cpi, spi);
-            const fade = 1 - k / (cfg.trail + 1);
+            const fade = (1 - k / (cfg.trail + 1)) * currentScale;
             const sz = base * tp.s * fade * 0.8;
             ctx.globalAlpha = (back ? 0.22 : 0.45) * fade;
             ctx.drawImage(spr, tp.x - sz / 2, tp.y - sz / 2, sz, sz);
           }
 
           const sz = base * hs * (back ? 0.85 : 1);
-          ctx.globalAlpha = back ? 0.5 : 1;
+          ctx.globalAlpha = (back ? 0.5 : 1) * currentScale;
           ctx.drawImage(spr, hx - sz / 2, hy - sz / 2, sz, sz);
         }
       }
@@ -429,12 +501,15 @@ const HeroScene = () => {
       ctx.clearRect(0, 0, w, h);
       if (w === 0 || h === 0) return;
 
+      const dt = Math.min(0.05, Math.max(0.008, t - lastCollisionT));
+      lastCollisionT = t;
+
       pYaw += (tYaw - pYaw) * 0.05;
       pPitch += (tPitch - pPitch) * 0.05;
 
-      const spin = t * 0.16;
-      const tilt = 0.78 + 0.24 * Math.sin(t * 0.15) + pPitch;
-      const yaw = 0.3 * Math.sin(t * 0.1) + pYaw;
+      const spin = t * 0.1;
+      const tilt = 0.78 + 0.22 * Math.sin(t * 0.12) + pPitch;
+      const yaw = 0.25 * Math.sin(t * 0.08) + pYaw;
       const ca = Math.cos(spin);
       const sa = Math.sin(spin);
       const cb = Math.cos(tilt);
@@ -443,6 +518,71 @@ const HeroScene = () => {
       const sg = Math.sin(yaw);
       const cpi = Math.cos(pPitch * 0.6);
       const spi = Math.sin(pPitch * 0.6);
+
+      // Hồi phục dần độ sáng và kích thước của các hạt to sau khi vỡ vụn
+      for (const tr of tracks) {
+        for (const st of tr.stars) {
+          if (st.scale < 1.0) {
+            st.scale = Math.min(1.0, st.scale + dt * 0.28);
+          }
+        }
+      }
+
+      // Thu thập vị trí các sao chổi trên quỹ đạo để tính va chạm
+      const currentStars: {
+        x: number;
+        y: number;
+        z: number;
+        c: number;
+        ti: number;
+        si: number;
+        st: Track['stars'][number];
+      }[] = [];
+      for (let ti = 0; ti < tracks.length; ti++) {
+        const tr = tracks[ti];
+        for (let si = 0; si < tr.stars.length; si++) {
+          const st = tr.stars[si];
+          const theta = st.a0 + tr.dir * tr.speed * st.sp * t;
+          trackPoint(tr, theta, cg, sg, cpi, spi);
+          currentStars.push({
+            x: tp.x,
+            y: tp.y,
+            z: tp.z,
+            c: st.c,
+            ti,
+            si,
+            st,
+          });
+        }
+      }
+
+      // Phát hiện điểm giao thoa va chạm giữa các hạt trên các vòng quỹ đạo khác nhau
+      for (let i = 0; i < currentStars.length; i++) {
+        const a = currentStars[i];
+        for (let j = i + 1; j < currentStars.length; j++) {
+          const b = currentStars[j];
+          if (a.ti === b.ti) continue;
+          // Chỉ va chạm khi cả hai hạt đã hồi phục kích thước (> 0.5)
+          if (a.st.scale < 0.5 || b.st.scale < 0.5) continue;
+
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const d2 = dx * dx + dy * dy;
+
+          // Độ nhạy va chạm: khoảng cách màn hình < 28px và độ sâu Z bao quát < outer * 0.65
+          if (d2 < 28 * 28 && Math.abs(a.z - b.z) < outer * 0.65) {
+            const key = `${a.ti}_${a.si}:${b.ti}_${b.si}`;
+            const prev = cooldowns.get(key) || -99;
+            if (t - prev > 1.8) {
+              cooldowns.set(key, t);
+              // Nổ: hạt to vỡ thành hạt nhỏ li ti, hạt to thu nhỏ tức thì và hồi phục dần
+              a.st.scale = 0.15;
+              b.st.scale = 0.15;
+              triggerShatter((a.x + b.x) * 0.5, (a.y + b.y) * 0.5, a.c, b.c);
+            }
+          }
+        }
+      }
 
       ctx.globalCompositeOperation = 'lighter';
       drawBgStars(t);
@@ -461,6 +601,9 @@ const HeroScene = () => {
       drawTorus(ca, sa, cb, sb, cg, sg);
       drawTrackLines(false, cg, sg, cpi, spi);
       drawTrackStars(false, t, cg, sg, cpi, spi);
+
+      // Hiệu ứng các chấm nhỏ bung ra li ti & sáp nhập lại quỹ đạo
+      updateAndDrawDebris(dt);
 
       ctx.globalCompositeOperation = 'source-over';
     };

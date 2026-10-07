@@ -9,15 +9,17 @@ const Hero = () => {
     <section className="relative text-white pt-32 pb-24 sm:pt-40 sm:pb-32 overflow-hidden flex flex-col justify-center min-h-[640px] sm:min-h-[700px]">
       <HeroScene />
       <div className="hero-enter max-w-4xl mx-auto text-center px-4 relative z-10">
-        <h1 className="hero-title text-5xl font-bold tracking-tight sm:text-6xl mb-4">
-          {t.nameUpper}
-        </h1>
+        <div>
+          <h1 className="hero-title text-5xl font-bold tracking-tight sm:text-7xl mb-4">
+            {t.nameUpper}
+          </h1>
+        </div>
         <div className="flex items-center justify-center gap-3 mb-10">
-          <span className="h-px w-16 sm:w-24 bg-gradient-to-r from-transparent to-cyan-400/50" />
-          <p className="text-sm sm:text-base text-white/60 font-medium tracking-wide text-center">
+          <span className="h-[1.5px] w-16 sm:w-28 bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
+          <p className="text-sm sm:text-base text-cyan-100 font-medium tracking-wide text-center drop-shadow-[0_2px_10px_rgba(2,6,23,0.95)]">
             {t.hero.tagline}
           </p>
-          <span className="h-px w-16 sm:w-24 bg-gradient-to-l from-transparent to-cyan-400/50" />
+          <span className="h-[1.5px] w-16 sm:w-28 bg-gradient-to-l from-transparent via-cyan-400/60 to-transparent shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
         </div>
 
         <div className="flex flex-wrap justify-center gap-3 mb-12 text-sm font-medium">
