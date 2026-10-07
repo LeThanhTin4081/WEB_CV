@@ -47,7 +47,13 @@ function AppShell() {
   ];
 
   useEffect(() => {
-    document.documentElement.lang = lang;
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+    const titles: Record<typeof lang, string> = {
+      en: 'Tin Le Thanh | Portfolio',
+      vi: 'Lê Thành Tin | Portfolio',
+      zh: 'Tin Thanh Le | Portfolio',
+    };
+    document.title = titles[lang];
   }, [lang]);
 
   useEffect(() => {

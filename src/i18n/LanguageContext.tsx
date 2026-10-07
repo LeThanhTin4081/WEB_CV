@@ -273,7 +273,7 @@ const translations = {
       ctaContact: '联系我',
     },
     about: {
-      title: 'About',
+      title: '关于我',
       summaryTitle: '个人概述',
       summaryP1:
         '我毕业于 Data Science 专业，目前专注于 Analytics Engineering，对前沿科技与 AI 充满热情。我热衷于直接与数据打交道——构建与转换数据，优化数据处理流程，并打造高可靠性、随时可供分析的数据集。',
@@ -284,7 +284,7 @@ const translations = {
       school: '胡志明市交通大学 (UTH)',
       major: '专业：Data Science',
       gpa: '累计 GPA：',
-      aboutMe: 'About Me',
+      aboutMe: '关于我',
       experienceTitle: '我的经历',
       experienceBody:
         '拥有扎实的 SQL、Python 与 Power BI 技术基础的 Data Science 毕业生。具备构建自动化数据流 (data pipelines) 与交互式 Dashboard 的实战经验，助力企业实现数据驱动决策。专注于通过数据清洗、探索性分析 (EDA) 与可视化来创造真实的业务价值。',
@@ -315,7 +315,7 @@ const translations = {
     },
     projects: {
       title: '精选项目',
-      filterAll: 'All',
+      filterAll: '全部',
       filterData: 'Data',
       filterDashboard: 'Dashboard',
       filterMl: 'ML',
