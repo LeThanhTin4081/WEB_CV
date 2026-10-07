@@ -80,7 +80,7 @@ body,
       radial-gradient(circle at 75% 60%, rgba(30, 58, 138, 0.18), rgba(30, 64, 175, 0.09) 20%, transparent 45%),
       radial-gradient(circle at 50% 25%, rgba(14, 165, 233, 0.12), rgba(6, 182, 212, 0.06) 30%, transparent 45%),
       radial-gradient(circle at 80% 30%, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.05) 25%, transparent 40%);
-    animation: waterGlow 105s ease-in-out infinite;
+    animation: waterGlow 150s ease-in-out infinite;
   }
 
   .retro-background {
@@ -273,94 +273,131 @@ body,
   }
 }
 
-/* Đổi màu 7 sắc thái vũ trụ (Thất sắc Tinh vân): 105s chu kỳ tuần hoàn (15s/màu = 10s đỉnh + 5s chuyển sắc)
-   1. Xanh dương Sapphire → 2. Tím chàm Indigo → 3. Hồng tím Magenta → 4. Hồng san hô / Đỏ Ruby → 5. Cam hổ phách hoàng hôn → 6. Xanh lục ngọc bích → 7. Xanh ngọc Cyan */
+/* Đổi màu 10 sắc thái vũ trụ (Thập sắc Tinh vân): 150s chu kỳ tuần hoàn (15s/màu = 10s đỉnh + 5s chuyển sắc)
+   1. Xanh dương Sapphire → 2. Tím chàm Indigo → 3. Hồng tím Magenta → 4. Hồng san hô Ruby → 5. Cam hổ phách hoàng hôn
+   → 6. Vàng kim tinh cầu (Solar Gold) → 7. Xanh cốm cực quang (Aurora Lime) → 8. Xanh lục ngọc bích → 9. Xanh lam khổng tước (Peacock Teal) → 10. Xanh ngọc Cyan */
 @keyframes waterGlow {
-  /* 1. Xanh dương Sapphire (0s - 10s peak, 10s - 15s chuyển dần sang Tím chàm) */
+  /* 1. Xanh dương Sapphire (0s - 10s peak, 10s - 15s chuyển dần sang Tím chàm Indigo) */
   0% {
     opacity: 0.68;
     filter: hue-rotate(0deg) brightness(1.1);
     transform: translateZ(0) scale(1);
   }
-  9.52% {
+  6.67% {
     opacity: 0.72;
     filter: hue-rotate(0deg) brightness(1.12);
     transform: translateZ(0) scale(1.015);
   }
 
   /* 2. Tím chàm Indigo (15s - 25s peak, 25s - 30s chuyển dần sang Hồng tím Magenta) */
-  14.29% {
+  10% {
     opacity: 0.76;
     filter: hue-rotate(35deg) brightness(1.17);
     transform: translateZ(0) scale(1.025);
   }
-  23.81% {
+  16.67% {
     opacity: 0.79;
     filter: hue-rotate(35deg) brightness(1.19);
     transform: translateZ(0) scale(1.03);
   }
 
   /* 3. Hồng tím Magenta (30s - 40s peak, 40s - 45s chuyển dần sang Hồng san hô Ruby) */
-  28.57% {
+  20% {
     opacity: 0.82;
     filter: hue-rotate(70deg) brightness(1.21);
     transform: translateZ(0) scale(1.035);
   }
-  38.10% {
+  26.67% {
     opacity: 0.84;
     filter: hue-rotate(70deg) brightness(1.22);
     transform: translateZ(0) scale(1.04);
   }
 
-  /* 4. Hồng san hô / Đỏ Ruby (45s - 55s peak, 55s - 60s chuyển dần sang Cam hổ phách) */
-  42.86% {
+  /* 4. Hồng san hô / Đỏ Ruby (45s - 55s peak, 55s - 60s chuyển sang Cam hổ phách hoàng hôn) */
+  30% {
     opacity: 0.82;
     filter: hue-rotate(110deg) brightness(1.22);
     transform: translateZ(0) scale(1.035);
   }
-  52.38% {
+  36.67% {
     opacity: 0.84;
     filter: hue-rotate(110deg) brightness(1.22);
     transform: translateZ(0) scale(1.04);
   }
 
-  /* 5. Cam hổ phách hoàng hôn Sunset Amber (60s - 70s peak, 70s - 75s chuyển sang Xanh lục ngọc bích) */
-  57.14% {
+  /* 5. Cam hổ phách hoàng hôn Sunset Amber (60s - 70s peak, 70s - 75s chuyển sang Vàng kim tinh cầu) */
+  40% {
     opacity: 0.80;
     filter: hue-rotate(145deg) brightness(1.2);
     transform: translateZ(0) scale(1.03);
   }
-  66.67% {
+  46.67% {
     opacity: 0.82;
     filter: hue-rotate(145deg) brightness(1.21);
     transform: translateZ(0) scale(1.035);
   }
 
-  /* 6. Xanh lục ngọc bích Emerald (75s - 85s peak, 85s - 90s chuyển sang Xanh ngọc Cyan) */
-  71.43% {
-    opacity: 0.77;
-    filter: hue-rotate(280deg) brightness(1.16);
+  /* 6. Vàng kim tinh cầu Solar Gold (75s - 85s peak, 85s - 90s chuyển sang Xanh cốm cực quang) */
+  50% {
+    opacity: 0.79;
+    filter: hue-rotate(185deg) brightness(1.19);
+    transform: translateZ(0) scale(1.03);
+  }
+  56.67% {
+    opacity: 0.81;
+    filter: hue-rotate(185deg) brightness(1.20);
+    transform: translateZ(0) scale(1.035);
+  }
+
+  /* 7. Xanh cốm cực quang Aurora Lime (90s - 100s peak, 100s - 105s chuyển sang Xanh lục ngọc bích) */
+  60% {
+    opacity: 0.78;
+    filter: hue-rotate(225deg) brightness(1.18);
     transform: translateZ(0) scale(1.025);
   }
-  80.95% {
-    opacity: 0.79;
-    filter: hue-rotate(280deg) brightness(1.17);
+  66.67% {
+    opacity: 0.80;
+    filter: hue-rotate(225deg) brightness(1.19);
     transform: translateZ(0) scale(1.03);
   }
 
-  /* 7. Xanh ngọc Cyan (90s - 100s peak, 100s - 105s chuyển về Xanh dương Sapphire) */
-  85.71% {
-    opacity: 0.73;
-    filter: hue-rotate(338deg) brightness(1.15);
+  /* 8. Xanh lục ngọc bích Emerald (105s - 115s peak, 115s - 120s chuyển sang Xanh lam khổng tước) */
+  70% {
+    opacity: 0.77;
+    filter: hue-rotate(275deg) brightness(1.16);
+    transform: translateZ(0) scale(1.025);
+  }
+  76.67% {
+    opacity: 0.79;
+    filter: hue-rotate(275deg) brightness(1.17);
+    transform: translateZ(0) scale(1.03);
+  }
+
+  /* 9. Xanh lam khổng tước Peacock Teal (120s - 130s peak, 130s - 135s chuyển sang Xanh ngọc Cyan) */
+  80% {
+    opacity: 0.75;
+    filter: hue-rotate(310deg) brightness(1.15);
     transform: translateZ(0) scale(1.02);
   }
-  95.24% {
-    opacity: 0.75;
-    filter: hue-rotate(338deg) brightness(1.16);
+  86.67% {
+    opacity: 0.77;
+    filter: hue-rotate(310deg) brightness(1.16);
     transform: translateZ(0) scale(1.025);
   }
 
-  /* Trở về 1. Xanh dương Sapphire hoàn tất chu kỳ 105s (360deg == 0deg) */
+  /* 10. Xanh ngọc Cyan (135s - 145s peak, 145s - 150s chuyển về Xanh dương Sapphire) */
+  90% {
+    opacity: 0.72;
+    filter: hue-rotate(340deg) brightness(1.15);
+    transform: translateZ(0) scale(1.02);
+  }
+  96.67% {
+    opacity: 0.74;
+    filter: hue-rotate(340deg) brightness(1.16);
+    transform: translateZ(0) scale(1.025);
+  }
+
+  /* Trở về 1. Xanh dương Sapphire hoàn tất chu kỳ 150s (360deg == 0deg) */
   100% {
     opacity: 0.68;
     filter: hue-rotate(360deg) brightness(1.1);
