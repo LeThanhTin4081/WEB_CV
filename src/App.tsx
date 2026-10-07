@@ -163,7 +163,7 @@ function AppShell() {
 
           <div className="flex items-center justify-end justify-self-end gap-2">
             <div
-              className="grid grid-cols-2 gap-0.5 rounded-full bg-white/5 border border-white/10 p-0.5 w-[5.25rem] shrink-0"
+              className="grid grid-cols-3 gap-0.5 rounded-full bg-white/5 border border-white/10 p-0.5 w-[7.5rem] shrink-0"
               role="group"
               aria-label="Language"
             >
@@ -186,6 +186,16 @@ function AppShell() {
                 }`}
               >
                 EN
+              </button>
+              <button
+                type="button"
+                onClick={() => setLang('zh')}
+                aria-pressed={lang === 'zh'}
+                className={`inline-flex h-8 w-full items-center justify-center rounded-full text-xs font-bold tracking-wide transition-all outline-none focus:outline-none ${
+                  lang === 'zh' ? 'bg-white/15 text-cyan-300' : 'text-white/40 hover:text-white/70'
+                }`}
+              >
+                ZH
               </button>
             </div>
 

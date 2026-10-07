@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from 'react';
 
-export type Lang = 'en' | 'vi';
+export type Lang = 'en' | 'vi' | 'zh';
 
 type LanguageContextValue = {
   lang: Lang;
@@ -256,6 +256,129 @@ const translations = {
       rights: 'All rights reserved.',
     },
   },
+  zh: {
+    name: 'Tin Thanh Le',
+    nameUpper: 'TIN THANH LE',
+    nav: {
+      home: '首页',
+      about: '关于我',
+      experience: '工作经历',
+      projects: '精选项目',
+      skills: '专业技能',
+      contact: '联系我',
+    },
+    hero: {
+      tagline: 'Data Science | 欢迎了解我！',
+      cta: '查看我的项目',
+      ctaContact: '联系我',
+    },
+    about: {
+      title: 'About',
+      summaryTitle: '个人概述',
+      summaryP1:
+        '我毕业于 Data Science 专业，目前专注于 Analytics Engineering，对前沿科技与 AI 充满热情。我热衷于直接与数据打交道——构建与转换数据，优化数据处理流程，并打造高可靠性、随时可供分析的数据集。',
+      summaryP2:
+        '我同时也在探索 AI 如何赋能数据工作流与自动化，使数据处理更加高效、具备可扩展性并兼具实用价值。我始终乐于拥抱新的工作机会、跨界合作与有价值的连接。',
+      summaryBold1: 'Data Science',
+      summaryBold2: 'Analytics Engineering',
+      school: '胡志明市交通大学 (UTH)',
+      major: '专业：Data Science',
+      gpa: '累计 GPA：',
+      aboutMe: 'About Me',
+      experienceTitle: '我的经历',
+      experienceBody:
+        '拥有扎实的 SQL、Python 与 Power BI 技术基础的 Data Science 毕业生。具备构建自动化数据流 (data pipelines) 与交互式 Dashboard 的实战经验，助力企业实现数据驱动决策。专注于通过数据清洗、探索性分析 (EDA) 与可视化来创造真实的业务价值。',
+      skillsetTitle: '核心技能',
+      skillsetBody:
+        '我高度重视数据的准确性与流程优化。核心技能涵盖 Python（Pandas/NumPy、自动化数据采集）、SQL（针对大规模数据的复杂查询、CTEs 与窗口函数 Window Functions）以及 Power BI（DAX、数据建模、Dashboard 设计）。此外，我还将 Prompt Engineering、Git/GitHub 以及 Web 开发工具（Node.js）灵活应用于日常开发中。',
+      goalsTitle: '未来目标',
+      goalsBody:
+        '我正在寻找能在真实商业项目中发挥专业技能的机会。我希望与优秀团队携手，通过数据带来积极变革，同时持续紧跟 AI 与数据领域的最新突破，勇敢迎接更具挑战性的任务。',
+      resume: '个人简历',
+      download: '下载简历',
+    },
+    experience: {
+      title: '工作经历',
+      role: '社交媒体数据分析师',
+      company: 'Reputyze Asia · 实习',
+      period: '2026年5月 - 2026年10月',
+      months: '6个月',
+      roleType: 'Data Analyst Intern',
+      onsite: '现场办公 (On-site)',
+      highlights: '核心成果',
+      b1: '参与开发并维护跨 Facebook、TikTok 与 Threads 的自动化数据采集工作流，负责日常数据质量质检。',
+      b2: '主导监控与告警流程，搭建用于负面舆情与敏感内容预警的 Telegram Bot。',
+      b3: '独立开发用于情感标注的 Chrome Extension，并探索在 RunPod 上基于 Qwen2.5-7B 进行情感分类微调。',
+      b4: '调研并实践 MySQL、PostgreSQL、ClickHouse 与 Elasticsearch 在海量社交数据存储、检索与复杂查询中的应用。',
+      b5: '深入调研 CDP、CRM Dashboard 与社交媒体 API，协助准备商业提案与竞标 (pitching) 所需的数据和内容。',
+      b6: '支持市场调研与商业洞察报告，主导2026年第三季度越南零售市场专项分析。',
+    },
+    projects: {
+      title: '精选项目',
+      filterAll: 'All',
+      filterData: 'Data',
+      filterDashboard: 'Dashboard',
+      filterMl: 'ML',
+      code: 'GitHub',
+      live: 'Live demo',
+      empty: '当前分类下暂无项目。',
+      p1b1:
+        '设计并实现 ELT Pipeline，利用高级 T-SQL（CTEs、Window Functions）将 51,290 条原始订单数据标准化为 3NF 架构，精准定位平均耗时 5.25 天的物流瓶颈。',
+      p1b2:
+        '基于 RFM 行为特征训练 K-Means 聚类模型，对 38,995 名客户进行精准分群，提出 3 项个性化营销策略以优化广告投放并降低客户流失率。',
+      p1b3:
+        '使用 Plotly 与 Streamlit 搭建多页面交互式 Dashboard，为 781 万美元营收与 46.22% 利润率提供实时业务洞察。',
+      p2b1:
+        '搭建自动化 Python 爬虫系统，从 4 个主流平台采集 163,000+ 条房产信息，降低人工采集成本约 90%。',
+      p2b2:
+        '通过严格的数据清洗与深入的探索性分析 (EDA)，精准识别不同市场细分群体与区域价格分布特征。',
+      p2b3:
+        '开发高性能 Power BI Dashboard，结合动态筛选器与 DAX 度量值，直观呈现房地产市场趋势。',
+      p3b1:
+        '整合 7 种核心大宗商品过去 20 年的历史价格数据，借助 Power Query 标准化多源异构数据集，保证 100% 数据一致性。',
+      p3b2:
+        '使用 DAX 设计深度可视化图表，揭示长期价格波动与重大宏观经济事件（如 COVID-19、2008年金融危机）之间的强相关性。',
+      p3b3:
+        '为市场波动与风险管理提供切实可行的策略洞察。',
+    },
+    skills: {
+      titleLeft: 'Technical',
+      titleRight: 'Skills',
+    },
+    contact: {
+      title: '联系我',
+      intro:
+        '如果您对商业合作、Data Science 项目感兴趣，或正在寻找一位优秀的人才，欢迎随时与我联系。信息将直达我的个人邮箱，我会尽快回复您。',
+      phone: '电话',
+      locationLabel: '工作地点',
+      locationValue: '胡志明市',
+      nameLabel: '姓名',
+      namePlaceholder: '请输入您的姓名',
+      nameError: '请输入您的姓名',
+      emailLabel: '回复邮箱',
+      emailPlaceholder: 'you@email.com',
+      emailRequired: '请输入您的邮箱',
+      emailInvalid: '邮箱格式不正确',
+      linkLabel: '文档 / 职位描述链接 (JD)',
+      linkPlaceholder: '粘贴 Google Drive、Dropbox 链接...（选填）',
+      messageLabel: '留言内容',
+      messagePlaceholder: '您希望交流什么内容？',
+      messageError: '请输入留言内容',
+      send: '发送消息',
+      sending: '正在发送...',
+      successTitle: '发送成功！',
+      successBody: '感谢您的来信。Tin 会尽快给您回复！',
+      close: '关闭',
+      sendError: '邮件发送失败：',
+    },
+    footer: {
+      blurb:
+        '热衷于将 AI 与数据科学最新研究成果应用于解决实际业务问题的 Data Science 专业人士。持续追求在数据科学领域的深耕与突破。',
+      quickLinks: '快速链接',
+      connect: '社交连接',
+      rights: 'All rights reserved.',
+    },
+  },
 } as const;
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
@@ -267,7 +390,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     if (typeof window !== 'undefined') {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved === 'vi' || saved === 'en') return saved;
+        if (saved === 'vi' || saved === 'en' || saved === 'zh') return saved;
       } catch {
         // bỏ qua nếu bị chặn cookie/storage
       }
@@ -288,7 +411,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     () => ({
       lang,
       setLang,
-      toggleLang: () => setLang(lang === 'en' ? 'vi' : 'en'),
+      toggleLang: () => {
+        const order: Lang[] = ['vi', 'en', 'zh'];
+        const next = order[(order.indexOf(lang) + 1) % order.length];
+        setLang(next);
+      },
       t: translations[lang],
     }),
     [lang]
