@@ -392,7 +392,7 @@ const Skills = () => {
     <section className="scroll-mt-24">
       <div className="mb-10 text-center">
         <h2 className="section-title">
-          {t.skills.titleLeft} {t.skills.titleRight}
+          {t.skills.title}
         </h2>
         <div className="section-rule mx-auto mt-4" />
       </div>

@@ -96,8 +96,7 @@ const translations = {
         'Provided actionable insights on market volatility and risk.',
     },
     skills: {
-      titleLeft: 'Technical',
-      titleRight: 'Skills',
+      title: 'Technical Skills',
     },
     contact: {
       title: 'Contact',
@@ -219,8 +218,7 @@ const translations = {
         'Cung cấp các insight thực tiễn (actionable insights) có giá trị về mức độ biến động và rủi ro của thị trường.',
     },
     skills: {
-      titleLeft: 'Technical',
-      titleRight: 'Skills',
+      title: 'Technical Skills',
     },
     contact: {
       title: 'Contact',
@@ -342,8 +340,7 @@ const translations = {
         '为市场波动与风险管理提供切实可行的策略洞察。',
     },
     skills: {
-      titleLeft: 'Technical',
-      titleRight: 'Skills',
+      title: '专业技能',
     },
     contact: {
       title: '联系我',
